@@ -1,0 +1,616 @@
+
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Login | Velmore Studio</title>
+    <meta name="description" content="Sign in to your Velmore Studio account to shop your favourite homemade treats.">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --chocolate: #402820;
+            --chocolate-dark: #2f1c17;
+            --brown: #75574b;
+            --pink: #df7d88;
+            --pink-dark: #bd5968;
+            --cream: #fffaf5;
+            --cream-dark: #f8eee6;
+            --white: #ffffff;
+            --muted: #927e75;
+            --border: #eadbd2;
+            --error-bg: #fff0f0;
+            --error-text: #9b3038;
+            --success-bg: #edf7ed;
+            --success-text: #286a38;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            padding: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: "DM Sans", Arial, sans-serif;
+            color: var(--chocolate);
+            background:
+                radial-gradient(circle at 8% 12%, #f8e1df 0, transparent 28%),
+                radial-gradient(circle at 95% 90%, #f3e5d8 0, transparent 30%),
+                var(--cream);
+        }
+
+        a {
+            color: var(--pink-dark);
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        .login-layout {
+            width: 100%;
+            max-width: 980px;
+            min-height: 600px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            overflow: hidden;
+            background: var(--white);
+            border: 1px solid rgba(64, 40, 32, 0.08);
+            border-radius: 24px;
+            box-shadow: 0 24px 70px rgba(64, 40, 32, 0.12);
+        }
+
+        /* LEFT BRAND PANEL */
+
+        .brand-panel {
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 38px;
+            color: var(--white);
+            background: var(--chocolate);
+        }
+
+        .brand-panel::before,
+        .brand-panel::after {
+            content: "";
+            position: absolute;
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+
+        .brand-panel::before {
+            width: 330px;
+            height: 330px;
+            right: -150px;
+            top: -100px;
+        }
+
+        .brand-panel::after {
+            width: 260px;
+            height: 260px;
+            left: -140px;
+            bottom: -100px;
+        }
+
+        .brand,
+        .brand-copy,
+        .brand-footer {
+            position: relative;
+            z-index: 1;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 13px;
+            color: white;
+        }
+
+        .brand img {
+            width: 54px;
+            height: 54px;
+            padding: 4px;
+            object-fit: contain;
+            border-radius: 13px;
+            background: white;
+        }
+
+        .brand-name {
+            display: block;
+            font-size: 16px;
+            font-weight: 700;
+            letter-spacing: 2px;
+        }
+
+        .brand-tagline {
+            display: block;
+            margin-top: 6px;
+            color: #e9c7bd;
+            font-size: 10px;
+            letter-spacing: 1.7px;
+        }
+
+        .brand-copy {
+            margin: 45px 0;
+        }
+
+        .brand-eyebrow {
+            color: #f2aab2;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .brand-copy h1 {
+            margin: 17px 0;
+            font-family: "Playfair Display", Georgia, serif;
+            font-size: clamp(34px, 4vw, 46px);
+            line-height: 1.2;
+            font-weight: 500;
+        }
+
+        .brand-copy p {
+            max-width: 330px;
+            color: #e5d5ce;
+            font-size: 14px;
+            line-height: 1.9;
+        }
+
+        .bakery-note {
+            display: inline-flex;
+            align-items: center;
+            gap: 9px;
+            margin-top: 18px;
+            padding: 11px 15px;
+            border: 1px solid rgba(255, 255, 255, 0.17);
+            border-radius: 30px;
+            color: #f9e4df;
+            font-size: 12px;
+        }
+
+        .brand-footer {
+            color: #cdb5ab;
+            font-size: 11px;
+            line-height: 1.7;
+        }
+
+        /* RIGHT LOGIN PANEL */
+
+        .form-panel {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 48px clamp(25px, 5vw, 58px);
+        }
+
+        .mobile-brand {
+            display: none;
+        }
+
+        .form-eyebrow {
+            margin: 0 0 10px;
+            color: var(--pink-dark);
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .form-panel h2 {
+            margin: 0;
+            font-family: "Playfair Display", Georgia, serif;
+            font-size: 34px;
+            font-weight: 600;
+        }
+
+        .form-intro {
+            margin: 12px 0 26px;
+            color: var(--muted);
+            font-size: 13px;
+            line-height: 1.8;
+        }
+
+        .messages {
+            margin-bottom: 18px;
+        }
+
+        .message {
+            margin-bottom: 9px;
+            padding: 12px 14px;
+            border-radius: 9px;
+            font-size: 12px;
+            line-height: 1.6;
+            overflow-wrap: anywhere;
+        }
+
+        .message.error {
+            background: var(--error-bg);
+            color: var(--error-text);
+            border: 1px solid #f2d1d3;
+        }
+
+        .message.success {
+            background: var(--success-bg);
+            color: var(--success-text);
+            border: 1px solid #d5ead5;
+        }
+
+        .message.info,
+        .message.warning {
+            background: #fff5df;
+            color: #78551b;
+            border: 1px solid #f0e0b9;
+        }
+
+        .field {
+            margin-bottom: 19px;
+        }
+
+        .field label {
+            display: block;
+            margin-bottom: 9px;
+            color: var(--chocolate);
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        .input-wrap {
+            position: relative;
+        }
+
+        .field input {
+            display: block;
+            width: 100%;
+            min-height: 48px;
+            padding: 13px 14px;
+            border: 1px solid var(--border);
+            border-radius: 9px;
+            outline: none;
+            background: #fffdfb;
+            color: var(--chocolate);
+            font: inherit;
+            font-size: 13px;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+
+        .field input::placeholder {
+            color: #b5a49b;
+        }
+
+        .field input:focus {
+            border-color: var(--pink);
+            box-shadow: 0 0 0 3px rgba(223, 125, 136, 0.14);
+        }
+
+        .password-input {
+            padding-right: 78px !important;
+        }
+
+        .toggle-password {
+            position: absolute;
+            top: 50%;
+            right: 12px;
+            transform: translateY(-50%);
+            padding: 5px;
+            border: 0;
+            background: transparent;
+            color: var(--pink-dark);
+            font-family: inherit;
+            font-size: 11px;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        .toggle-password:focus-visible {
+            outline: 2px solid var(--pink-dark);
+            outline-offset: 3px;
+            border-radius: 4px;
+        }
+
+        .form-options {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            margin: 0 0 22px;
+            color: var(--muted);
+            font-size: 11px;
+        }
+
+        .submit-button {
+            display: block;
+            width: 100%;
+            min-height: 49px;
+            border: 0;
+            border-radius: 9px;
+            background: var(--chocolate);
+            color: var(--white);
+            font-family: inherit;
+            font-size: 13px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: background 0.2s, transform 0.2s;
+        }
+
+        .submit-button:hover {
+            background: var(--pink-dark);
+            transform: translateY(-1px);
+        }
+
+        .submit-button:focus-visible {
+            outline: 3px solid #f2b4bb;
+            outline-offset: 3px;
+        }
+
+        .register-note {
+            margin: 24px 0 0;
+            text-align: center;
+            color: var(--muted);
+            font-size: 12px;
+            line-height: 1.8;
+        }
+
+        .register-note a {
+            font-weight: 700;
+        }
+
+        .back-home {
+            display: block;
+            margin-top: 24px;
+            text-align: center;
+            color: var(--brown);
+            font-size: 11px;
+        }
+
+        .back-home:hover {
+            color: var(--pink-dark);
+        }
+
+        @media (max-width: 720px) {
+            body {
+                padding: 16px;
+            }
+
+            .login-layout {
+                max-width: 470px;
+                min-height: auto;
+                grid-template-columns: 1fr;
+                border-radius: 18px;
+            }
+
+            .brand-panel {
+                display: none;
+            }
+
+            .form-panel {
+                padding: 34px 26px;
+            }
+
+            .mobile-brand {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                gap: 11px;
+                margin-bottom: 32px;
+            }
+
+            .mobile-brand img {
+                width: 47px;
+                height: 47px;
+                object-fit: contain;
+                padding: 3px;
+                border: 1px solid var(--border);
+                border-radius: 10px;
+                background: white;
+            }
+
+            .mobile-brand strong,
+            .mobile-brand small {
+                display: block;
+            }
+
+            .mobile-brand strong {
+                font-size: 13px;
+                letter-spacing: 1.5px;
+            }
+
+            .mobile-brand small {
+                margin-top: 5px;
+                color: var(--muted);
+                font-size: 9px;
+                letter-spacing: 1.2px;
+            }
+
+            .form-panel h2 {
+                font-size: 30px;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *,
+            *::before,
+            *::after {
+                scroll-behavior: auto !important;
+                transition: none !important;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <main class="login-layout">
+
+        <!-- BRAND PANEL -->
+        <section class="brand-panel" aria-label="Velmore Studio introduction">
+
+            <a href="{% url 'home' %}" class="brand">
+                <img src="{% static 'images/logo.png' %}"
+                     alt="Velmore Studio logo">
+
+                <span>
+                    <span class="brand-name">VELMORE STUDIO</span>
+                    <span class="brand-tagline">HOMEMADE WITH LOVE</span>
+                </span>
+            </a>
+
+            <div class="brand-copy">
+                <p class="brand-eyebrow">A little sweetness awaits</p>
+
+                <h1>Made with love.<br>Shared with joy.</h1>
+
+                <p>
+                    Welcome back to your little corner of sweetness.
+                    Sign in to discover your favourites and keep track
+                    of your orders.
+                </p>
+
+                <div class="bakery-note">
+                    <span aria-hidden="true">♡</span>
+                    Freshly made, lovingly shared
+                </div>
+            </div>
+
+            <div class="brand-footer">
+                Every treat tells a story.<br>
+                Thank you for being part of ours.
+            </div>
+        </section>
+
+        <!-- LOGIN FORM -->
+        <section class="form-panel">
+
+            <a href="{% url 'home' %}" class="mobile-brand">
+                <img src="{% static 'images/logo.png' %}"
+                     alt="Velmore Studio logo">
+
+                <span>
+                    <strong>VELMORE STUDIO</strong>
+                    <small>HOMEMADE WITH LOVE</small>
+                </span>
+            </a>
+
+            <p class="form-eyebrow">Welcome back</p>
+            <h2>Sign in</h2>
+
+            <p class="form-intro">
+                Enter your account details to continue shopping.
+            </p>
+
+            {% if messages %}
+                <div class="messages" aria-live="polite">
+                    {% for message in messages %}
+                        <div class="message {{ message.tags|default:'info' }}">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+
+            {% if form.errors %}
+                <div class="message error" role="alert">
+                    Your login details could not be accepted.
+                    Please check your username and password and try again.
+                </div>
+            {% endif %}
+
+            <form method="post" action="{% url 'login' %}">
+                {% csrf_token %}
+
+                <div class="field">
+                    <label for="username">Username</label>
+                    <input
+                        type="text"
+                        id="username"
+                        name="username"
+                        placeholder="Enter your username"
+                        autocomplete="username"
+                        maxlength="150"
+                        required
+                        autofocus
+                    >
+                </div>
+
+                <div class="field">
+                    <label for="password">Password</label>
+
+                    <div class="input-wrap">
+                        <input
+                            type="password"
+                            id="password"
+                            name="password"
+                            class="password-input"
+                            placeholder="Enter your password"
+                            autocomplete="current-password"
+                            required
+                        >
+
+                        <button
+                            type="button"
+                            class="toggle-password"
+                            id="togglePassword"
+                            aria-controls="password"
+                            aria-pressed="false"
+                        >
+                            Show
+                        </button>
+                    </div>
+                </div>
+
+                <div class="form-options">
+                    <span>Secure sign-in</span>
+                    <a href="{% url 'register' %}">Create an account</a>
+                </div>
+
+                <button type="submit" class="submit-button">
+                    Sign In →
+                </button>
+            </form>
+
+            <p class="register-note">
+                New to Velmore Studio?
+                <a href="{% url 'register' %}">Create your account</a>
+            </p>
+
+            <a href="{% url 'home' %}" class="back-home">
+                ← Back to the store
+            </a>
+
+        </section>
+    </main>
+
+    <script>
+        "use strict";
+
+        const passwordInput = document.getElementById("password");
+        const toggleButton = document.getElementById("togglePassword");
+
+        toggleButton.addEventListener("click", function () {
+            const passwordIsHidden = passwordInput.type === "password";
+
+            passwordInput.type = passwordIsHidden ? "text" : "password";
+            toggleButton.textContent = passwordIsHidden ? "Hide" : "Show";
+            toggleButton.setAttribute(
+                "aria-pressed",
+                passwordIsHidden ? "true" : "false"
+            );
+        });
+    </script>
+</body>
+</html>

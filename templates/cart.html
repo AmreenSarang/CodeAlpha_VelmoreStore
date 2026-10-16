@@ -1,0 +1,769 @@
+
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Review your Velmore Studio shopping cart and continue to checkout.">
+    <title>Shopping Cart | Velmore Studio</title>
+
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+    <style>
+        :root {
+            --brown: #59372c;
+            --dark: #38221c;
+            --brown-light: #85675b;
+            --pink: #df7d88;
+            --pink-dark: #bd5968;
+            --cream: #fffaf4;
+            --cream-deep: #fff1e8;
+            --border: #ead6ca;
+            --green: #51764b;
+            --red: #b83d45;
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            margin: 0;
+            background: var(--cream);
+            color: var(--brown);
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        a { color: inherit; }
+
+        .site-header {
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            background: var(--cream);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .header-inner {
+            max-width: 1250px;
+            min-height: 75px;
+            margin: auto;
+            padding: 12px 5%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+        }
+
+        .brand {
+            color: var(--brown);
+            font: bold 24px Georgia, serif;
+            letter-spacing: 1px;
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 22px;
+        }
+
+        .nav-links a {
+            color: var(--brown);
+            font-size: 14px;
+            text-decoration: none;
+        }
+
+        .nav-links a:hover { color: var(--pink-dark); }
+
+        .messages {
+            max-width: 1150px;
+            margin: 18px auto 0;
+            padding: 0 20px;
+        }
+
+        .message {
+            margin-bottom: 10px;
+            padding: 13px 16px;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            background: white;
+            font-size: 14px;
+        }
+
+        .message.success {
+            background: #f1faee;
+            color: #315b2b;
+        }
+
+        .message.error {
+            background: #fff0f0;
+            color: #9b2f2f;
+        }
+
+        .message.warning {
+            background: #fff8e8;
+            color: #785b19;
+        }
+
+        .page-container {
+            max-width: 1250px;
+            min-height: 65vh;
+            margin: auto;
+            padding: 45px 5% 75px;
+        }
+
+        .breadcrumb {
+            margin-bottom: 22px;
+            color: var(--brown-light);
+            font-size: 13px;
+        }
+
+        .breadcrumb a {
+            text-decoration: none;
+        }
+
+        .breadcrumb a:hover { color: var(--pink-dark); }
+
+        .page-title {
+            margin: 0;
+            color: var(--dark);
+            font: 500 clamp(32px, 4vw, 46px) Georgia, serif;
+        }
+
+        .page-subtitle {
+            margin: 12px 0 32px;
+            color: var(--brown-light);
+            font-size: 14px;
+            line-height: 1.8;
+        }
+
+        .cart-layout {
+            display: grid;
+            grid-template-columns: minmax(0, 1.8fr) minmax(280px, 1fr);
+            align-items: start;
+            gap: 28px;
+        }
+
+        .cart-panel,
+        .summary-panel {
+            overflow: hidden;
+            border: 1px solid var(--border);
+            border-radius: 9px;
+            background: white;
+        }
+
+        .panel-heading {
+            margin: 0;
+            padding: 20px 22px;
+            border-bottom: 1px solid var(--border);
+            background: var(--cream-deep);
+            color: var(--brown);
+            font: bold 19px Georgia, serif;
+        }
+
+        .cart-item {
+            padding: 20px;
+            display: grid;
+            grid-template-columns: 100px minmax(0, 1fr);
+            gap: 18px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .cart-item:last-child { border-bottom: 0; }
+
+        .item-image-wrap {
+            width: 100px;
+            height: 115px;
+            overflow: hidden;
+            border-radius: 7px;
+            background: var(--cream-deep);
+        }
+
+        .item-image {
+            width: 100%;
+            height: 100%;
+            display: block;
+            object-fit: cover;
+        }
+
+        .item-placeholder {
+            width: 100%;
+            height: 100%;
+            display: grid;
+            place-items: center;
+            font-size: 36px;
+        }
+
+        .item-content {
+            min-width: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .item-name {
+            margin: 0 0 8px;
+            color: var(--dark);
+            font: 21px/1.35 Georgia, serif;
+            overflow-wrap: anywhere;
+        }
+
+        .item-name a { text-decoration: none; }
+        .item-name a:hover { color: var(--pink-dark); }
+
+        .item-price {
+            margin: 0 0 15px;
+            color: var(--brown-light);
+            font-size: 13px;
+        }
+
+        .item-bottom {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .quantity-controls {
+            display: inline-flex;
+            align-items: center;
+            gap: 0;
+            overflow: hidden;
+            border: 1px solid var(--border);
+            border-radius: 5px;
+        }
+
+        .quantity-form { margin: 0; }
+
+        .quantity-button {
+            width: 35px;
+            height: 35px;
+            border: 0;
+            background: var(--cream-deep);
+            color: var(--brown);
+            font-size: 19px;
+            cursor: pointer;
+        }
+
+        .quantity-button:hover:not(:disabled) {
+            background: #f5dfd7;
+        }
+
+        .quantity-button:disabled {
+            color: #b7a79f;
+            cursor: not-allowed;
+        }
+
+        .quantity-number {
+            min-width: 37px;
+            padding: 0 8px;
+            color: var(--brown);
+            font-size: 14px;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        .item-total {
+            color: var(--dark);
+            font-size: 17px;
+            font-weight: bold;
+            white-space: nowrap;
+        }
+
+        .remove-form { margin-top: 10px; }
+
+        .remove-button {
+            padding: 0;
+            border: 0;
+            background: transparent;
+            color: var(--red);
+            font-size: 12px;
+            cursor: pointer;
+        }
+
+        .remove-button:hover { text-decoration: underline; }
+
+        .summary-content { padding: 22px; }
+
+        .summary-line {
+            margin-bottom: 18px;
+            display: flex;
+            justify-content: space-between;
+            gap: 15px;
+            color: var(--brown-light);
+            font-size: 14px;
+        }
+
+        .summary-line strong {
+            color: var(--brown);
+            text-align: right;
+        }
+
+        .summary-divider {
+            margin: 22px 0;
+            border: 0;
+            border-top: 1px solid var(--border);
+        }
+
+        .summary-total {
+            color: var(--dark);
+            font-size: 17px;
+            font-weight: bold;
+        }
+
+        .summary-total strong {
+            color: var(--pink-dark);
+            font-size: 25px;
+        }
+
+        .summary-note {
+            margin: 18px 0;
+            color: var(--brown-light);
+            font-size: 12px;
+            line-height: 1.7;
+        }
+
+        .button {
+            width: 100%;
+            min-height: 46px;
+            padding: 13px 16px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid transparent;
+            border-radius: 5px;
+            font-size: 14px;
+            font-weight: bold;
+            text-align: center;
+            text-decoration: none;
+            cursor: pointer;
+            transition: background .2s ease;
+        }
+
+        .button-primary {
+            background: var(--brown);
+            color: white;
+        }
+
+        .button-primary:hover {
+            background: var(--dark);
+        }
+
+        .button-secondary {
+            margin-top: 12px;
+            border-color: var(--border);
+            background: white;
+            color: var(--brown);
+        }
+
+        .button-secondary:hover {
+            background: var(--cream-deep);
+        }
+
+        .secure-note {
+            margin-top: 18px;
+            color: var(--brown-light);
+            font-size: 12px;
+            text-align: center;
+        }
+
+        .empty-cart {
+            padding: 55px 25px;
+            text-align: center;
+        }
+
+        .empty-cart-icon { font-size: 60px; }
+
+        .empty-cart h2 {
+            margin: 18px 0 10px;
+            color: var(--dark);
+            font: 30px Georgia, serif;
+        }
+
+        .empty-cart p {
+            max-width: 420px;
+            margin: 0 auto 25px;
+            color: var(--brown-light);
+            font-size: 14px;
+            line-height: 1.8;
+        }
+
+        .empty-cart .button {
+            width: auto;
+            min-width: 190px;
+        }
+
+        .site-footer {
+            border-top: 4px solid var(--pink);
+            background: var(--cream-deep);
+        }
+
+        .footer-main {
+            max-width: 1250px;
+            margin: auto;
+            padding: 38px 5%;
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr;
+            gap: 30px;
+        }
+
+        .footer-brand h2 {
+            margin: 0 0 12px;
+            color: var(--brown);
+            font: bold 22px Georgia, serif;
+        }
+
+        .footer-main h3 {
+            margin: 0 0 15px;
+            color: var(--brown);
+            font: bold 17px Georgia, serif;
+        }
+
+        .footer-main p,
+        .footer-main a {
+            color: var(--brown-light);
+            font-size: 13px;
+            line-height: 1.8;
+            text-decoration: none;
+        }
+
+        .footer-main a:hover { color: var(--pink-dark); }
+
+        .footer-main ul {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+
+        .footer-main li { margin-bottom: 7px; }
+
+        .footer-bottom {
+            max-width: 1250px;
+            margin: auto;
+            padding: 20px 5%;
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 10px;
+            border-top: 1px solid var(--border);
+        }
+
+        .footer-bottom p {
+            margin: 0;
+            color: var(--brown-light);
+            font-size: 12px;
+        }
+
+        .heart { color: var(--pink-dark); }
+
+        @media (max-width: 850px) {
+            .cart-layout {
+                grid-template-columns: 1fr;
+            }
+
+            .summary-panel { order: -1; }
+        }
+
+        @media (max-width: 600px) {
+            .header-inner {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .nav-links {
+                width: 100%;
+                justify-content: center;
+                gap: 17px;
+            }
+
+            .nav-links a { font-size: 12px; }
+
+            .page-container { padding: 32px 4% 50px; }
+
+            .cart-item {
+                padding: 14px;
+                grid-template-columns: 80px minmax(0, 1fr);
+                gap: 12px;
+            }
+
+            .item-image-wrap { width: 80px; height: 95px; }
+
+            .item-name { font-size: 17px; }
+
+            .item-bottom { align-items: flex-start; }
+
+            .item-total { font-size: 15px; }
+
+            .panel-heading { padding: 16px; }
+
+            .summary-content { padding: 17px; }
+
+            .footer-main { grid-template-columns: 1fr 1fr; gap: 25px 15px; }
+
+            .footer-brand { grid-column: 1 / -1; }
+
+            .footer-bottom { flex-direction: column; }
+        }
+    </style>
+</head>
+
+<body>
+
+
+{% load static %}
+
+<header class="site-header">
+    <nav class="navbar">
+        <a href="{% url 'home' %}" class="brand">
+            <img
+                src="{% static 'images/logo.png' %}"
+                alt="Velmore Studio logo"
+                class="brand-logo"
+            >
+
+            <span class="brand-text">
+                <strong>VELMORE STUDIO</strong>
+                <small>HOMEMADE WITH LOVE</small>
+            </span>
+        </a>
+
+        <div class="nav-links">
+            <a href="{% url 'home' %}" class="nav-link">Home</a>
+            <a href="{% url 'home' %}#products" class="nav-link">Shop</a>
+            <a href="{% url 'cart' %}" class="nav-cart">♡ Cart</a>
+
+            {% if user.is_authenticated %}
+                <a href="{% url 'orders' %}" class="nav-link">My Orders</a>
+
+                <form method="post" action="{% url 'logout' %}">
+                    {% csrf_token %}
+                    <button type="submit" class="nav-link nav-logout">
+                        Logout
+                    </button>
+                </form>
+            {% else %}
+                <a href="{% url 'login' %}" class="nav-link">Login</a>
+                <a href="{% url 'register' %}" class="nav-link nav-register">
+                    Create Account
+                </a>
+            {% endif %}
+        </div>
+    </nav>
+</header>
+
+
+{% if messages %}
+    <div class="messages" aria-live="polite">
+        {% for message in messages %}
+            <div class="message {{ message.tags }}">{{ message }}</div>
+        {% endfor %}
+    </div>
+{% endif %}
+
+
+    <h1 class="page-title">Your Shopping Cart</h1>
+    <p class="page-subtitle">
+        Your favourite treats are waiting for you. Review your order before checkout.
+    </p>
+
+    {% if cart_items %}
+        <div class="cart-layout">
+
+            <!-- CART ITEMS -->
+            <section class="cart-panel" aria-label="Products in your cart">
+                <h2 class="panel-heading">
+                    Your Items ({{ cart_items|length }})
+                </h2>
+
+                {% for item in cart_items %}
+                    <article class="cart-item">
+
+                        <div class="item-image-wrap">
+                            {% if item.product.image %}
+                                <img
+                                    class="item-image"
+                                    src="{{ item.product.image.url }}"
+                                    alt="{{ item.product.name }}"
+                                >
+                            {% else %}
+                                <div class="item-placeholder">🍰</div>
+                            {% endif %}
+                        </div>
+
+                        <div class="item-content">
+                            <h3 class="item-name">
+                                <a href="{% url 'product_detail' item.product.id %}">
+                                    {{ item.product.name }}
+                                </a>
+                            </h3>
+
+                            <p class="item-price">
+                                Unit price: ₹{{ item.product.price|floatformat:2 }}
+                            </p>
+
+                            <div class="item-bottom">
+                                <div>
+                                    <div class="quantity-controls">
+                                        <!-- DECREASE QUANTITY -->
+                                        <form
+                                            class="quantity-form"
+                                            method="post"
+                                            action="{% url 'decrease_quantity' item.product.id %}"
+                                        >
+                                            {% csrf_token %}
+                                            <button
+                                                class="quantity-button"
+                                                type="submit"
+                                                aria-label="Decrease quantity"
+                                                title="Decrease quantity"
+                                            >−</button>
+                                        </form>
+
+                                        <span class="quantity-number">
+                                            {{ item.quantity }}
+                                        </span>
+
+                                        <!-- INCREASE QUANTITY -->
+                                        <form
+                                            class="quantity-form"
+                                            method="post"
+                                            action="{% url 'increase_quantity' item.product.id %}"
+                                        >
+                                            {% csrf_token %}
+                                            <button
+                                                class="quantity-button"
+                                                type="submit"
+                                                aria-label="Increase quantity"
+                                                title="Increase quantity"
+                                                {% if item.quantity >= item.product.stock %}disabled{% endif %}
+                                            >+</button>
+                                        </form>
+                                    </div>
+
+                                    <!-- REMOVE PRODUCT -->
+                                    <form
+                                        class="remove-form"
+                                        method="post"
+                                        action="{% url 'remove_from_cart' item.product.id %}"
+                                        onsubmit="return confirm('Remove this product from your cart?');"
+                                    >
+                                        {% csrf_token %}
+                                        <button class="remove-button" type="submit">
+                                            Remove item
+                                        </button>
+                                    </form>
+                                </div>
+
+                                <div class="item-total">
+                                    ₹{{ item.total|floatformat:2 }}
+                                </div>
+                            </div>
+                        </div>
+
+                    </article>
+                {% endfor %}
+            </section>
+
+            <!-- ORDER SUMMARY -->
+            <aside class="summary-panel">
+                <h2 class="panel-heading">Order Summary</h2>
+
+                <div class="summary-content">
+                    <div class="summary-line">
+                        <span>Items in cart</span>
+                        <strong>{{ cart_items|length }}</strong>
+                    </div>
+
+                    <div class="summary-line">
+                        <span>Subtotal</span>
+                        <strong>₹{{ total|floatformat:2 }}</strong>
+                    </div>
+
+                    <div class="summary-line">
+                        <span>Delivery</span>
+                        <strong>Calculated at checkout</strong>
+                    </div>
+
+                    <hr class="summary-divider">
+
+                    <div class="summary-line summary-total">
+                        <span>Estimated total</span>
+                        <strong>₹{{ total|floatformat:2 }}</strong>
+                    </div>
+
+                    <p class="summary-note">
+                        The total shown is based on your current product quantities.
+                        Any delivery charges or additional costs must be confirmed
+                        before payment.
+                    </p>
+
+                    <a class="button button-primary" href="{% url 'checkout' %}">
+                        Proceed to Checkout →
+                    </a>
+
+                    <a class="button button-secondary" href="{% url 'home' %}#products">
+                        ← Continue Shopping
+                    </a>
+
+                    <p class="secure-note">
+                        ♡ Thank you for shopping with Velmore Studio.
+                    </p>
+                </div>
+            </aside>
+
+        </div>
+
+    {% else %}
+        <!-- EMPTY CART -->
+        <section class="cart-panel empty-cart">
+            <div class="empty-cart-icon">🛍️</div>
+            <h2>Your Cart Is Waiting for Something Sweet</h2>
+            <p>
+                You haven't added any treats yet. Explore our collection and
+                discover something delicious to make your day.
+            </p>
+            <a class="button button-primary" href="{% url 'home' %}#products">
+                Explore Our Desserts
+            </a>
+        </section>
+    {% endif %}
+</main>
+
+<footer class="site-footer">
+    <div class="footer-main">
+        <div class="footer-brand">
+            <h2>VELMORE STUDIO</h2>
+            <p>Homemade with love, shared with happiness.</p>
+        </div>
+
+        <div>
+            <h3>Quick Links</h3>
+            <ul>
+                <li><a href="{% url 'home' %}">Home</a></li>
+                <li><a href="{% url 'home' %}#products">Our Desserts</a></li>
+                <li><a href="{% url 'cart' %}">Shopping Cart</a></li>
+            </ul>
+        </div>
+
+        <div>
+            <h3>Your Account</h3>
+            <ul>
+                {% if user.is_authenticated %}
+                    <li><a href="{% url 'orders' %}">My Orders</a></li>
+                {% else %}
+                    <li><a href="{% url 'login' %}">Login</a></li>
+                    <li><a href="{% url 'register' %}">Register</a></li>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+
+    <div class="footer-bottom">
+        <p>&copy; {% now "Y" %} Velmore Studio. All rights reserved.</p>
+        <p>Made with <span class="heart">♡</span> and a little sugar.</p>
+    </div>
+</footer>
+
+</body>
+</html>

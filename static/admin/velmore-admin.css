@@ -1,0 +1,494 @@
+
+/* =========================================
+   VELMORE STUDIO - DJANGO ADMIN
+   Bakery theme: cream, blush pink, chocolate
+========================================= */
+
+:root {
+    --velmore-brown: #43271e;
+    --velmore-brown-light: #634337;
+    --velmore-pink: #dc6d7b;
+    --velmore-pink-dark: #bd5263;
+    --velmore-cream: #fff8f0;
+    --velmore-border: #f0e1d8;
+    --velmore-text: #4c3027;
+}
+
+body,
+#container {
+    background: var(--velmore-cream) !important;
+    color: var(--velmore-text);
+    font-family: "Segoe UI", Arial, sans-serif;
+}
+
+/* HEADER */
+
+#header {
+    min-height: 72px;
+    padding: 0 28px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #fffaf4 !important;
+    color: var(--velmore-brown) !important;
+    border-bottom: 1px solid var(--velmore-border);
+    box-sizing: border-box;
+}
+
+#branding h1,
+#branding h1 a {
+    color: var(--velmore-brown) !important;
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 25px;
+    font-weight: 700;
+    letter-spacing: 1px;
+}
+
+#branding h1 a::before {
+    content: "🧁 ";
+}
+
+#user-tools,
+#user-tools a {
+    color: var(--velmore-brown) !important;
+}
+
+/* BREADCRUMB */
+
+div.breadcrumbs {
+    padding: 13px 25px;
+    background: var(--velmore-brown) !important;
+    color: #fff6ee !important;
+    font-size: 12px;
+}
+
+div.breadcrumbs a {
+    color: #ffd9d5 !important;
+}
+
+/* PAGE LAYOUT */
+
+#content {
+    padding: 25px !important;
+}
+
+#content-main {
+    width: 100%;
+    float: none;
+}
+
+.velmore-page {
+    max-width: 1500px;
+    margin: 0 auto;
+}
+
+.velmore-breadcrumb {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 25px;
+    color: #92796e;
+    font-size: 12px;
+}
+
+.velmore-breadcrumb a {
+    color: #806457;
+    text-decoration: none;
+}
+
+.velmore-breadcrumb a:hover {
+    color: var(--velmore-pink-dark);
+}
+
+.velmore-page-heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    margin-bottom: 28px;
+}
+
+.velmore-page-heading h1 {
+    margin: 0 0 8px;
+    color: var(--velmore-brown);
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: clamp(30px, 3vw, 44px);
+    font-weight: 500;
+}
+
+.velmore-page-heading h1 span {
+    color: var(--velmore-pink);
+}
+
+.velmore-page-heading p {
+    margin: 0;
+    color: #806f64;
+    font-size: 14px;
+}
+
+.velmore-back-button {
+    display: inline-block;
+    flex-shrink: 0;
+    padding: 12px 18px;
+    border: 1px solid #d8b7a9;
+    border-radius: 25px;
+    color: var(--velmore-brown) !important;
+    font-size: 12px;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.velmore-back-button:hover {
+    background: #fff0ed;
+}
+
+/* FORM AND PREVIEW CARDS */
+
+.velmore-content-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.55fr) minmax(280px, 0.95fr);
+    align-items: start;
+    gap: 20px;
+}
+
+.velmore-form-card,
+.velmore-preview-card {
+    min-width: 0;
+    overflow: hidden;
+    border: 1px solid #f3e8e0;
+    border-radius: 17px;
+    background: #fff;
+    box-shadow: 0 8px 28px rgba(67, 39, 30, 0.045);
+}
+
+.velmore-card-heading {
+    min-height: 65px;
+    padding: 18px 23px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 10px;
+    border-bottom: 1px solid #f4e9e3;
+}
+
+.velmore-heading-title {
+    display: flex;
+    align-items: center;
+    gap: 13px;
+}
+
+.velmore-heading-icon {
+    color: var(--velmore-pink);
+    font-size: 25px;
+}
+
+.velmore-card-heading h2 {
+    margin: 0;
+    color: var(--velmore-brown);
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 19px;
+    font-weight: 600;
+}
+
+.velmore-heading-caption {
+    color: #89776e;
+    font-size: 11px;
+}
+
+/* DJANGO FORM FIELDS */
+
+.velmore-form-body {
+    padding: 12px 23px 5px;
+}
+
+.velmore-form-body fieldset {
+    margin: 0 !important;
+    padding: 0 0 15px !important;
+    border: 0 !important;
+    border-bottom: 1px solid #f1e8e2 !important;
+}
+
+.velmore-form-body fieldset h2 {
+    margin: 0 0 15px;
+    padding: 0 !important;
+    background: transparent !important;
+    color: var(--velmore-brown) !important;
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 16px;
+}
+
+.velmore-form-body .form-row {
+    padding: 12px 0 !important;
+    border: 0 !important;
+    background: transparent !important;
+}
+
+.velmore-form-body label {
+    color: #56382d;
+    font-size: 13px;
+    font-weight: 650;
+}
+
+.velmore-form-body input[type="text"],
+.velmore-form-body input[type="number"],
+.velmore-form-body input[type="email"],
+.velmore-form-body input[type="url"],
+.velmore-form-body input[type="password"],
+.velmore-form-body textarea,
+.velmore-form-body select {
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    padding: 11px 13px;
+    border: 1px solid #e6d9d3;
+    border-radius: 8px;
+    background: #fffdfb;
+    color: var(--velmore-text);
+    font-size: 13px;
+}
+
+.velmore-form-body textarea {
+    min-height: 130px;
+    resize: vertical;
+}
+
+.velmore-form-body input:focus,
+.velmore-form-body textarea:focus,
+.velmore-form-body select:focus {
+    border-color: var(--velmore-pink);
+    outline: 2px solid #f8dfe2;
+}
+
+.velmore-form-body .help,
+.velmore-form-body .helptext {
+    display: block;
+    margin-top: 6px;
+    color: #927e74;
+    font-size: 11px;
+}
+
+.velmore-form-body .errorlist {
+    color: #b83d45;
+    font-size: 12px;
+}
+
+/* IMAGE UPLOAD */
+
+.velmore-form-body input[type="file"] {
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    padding: 15px;
+    border: 1px dashed var(--velmore-pink);
+    border-radius: 8px;
+    background: #fff8f6;
+}
+
+/* FORM ACTIONS */
+
+.velmore-form-actions {
+    padding: 15px 23px 23px;
+    background: #fff;
+}
+
+.velmore-form-actions .submit-row {
+    margin: 0 !important;
+    padding: 0 !important;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    overflow: visible;
+    background: transparent !important;
+    border: 0 !important;
+}
+
+.velmore-form-actions input[type="submit"],
+.velmore-form-actions button,
+.velmore-form-actions a {
+    min-height: 43px;
+    padding: 12px 20px;
+    border: 0;
+    border-radius: 8px;
+    background: var(--velmore-pink);
+    color: #fff !important;
+    font-size: 12px;
+    font-weight: 700;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.velmore-form-actions input[type="submit"]:hover,
+.velmore-form-actions button:hover {
+    background: var(--velmore-pink-dark);
+}
+
+.velmore-error-message {
+    margin-bottom: 20px;
+    padding: 14px;
+    border: 1px solid #f2c7c7;
+    border-radius: 8px;
+    background: #fff0f0;
+    color: #a12e36;
+}
+
+/* PRODUCT PREVIEW */
+
+.velmore-preview-body {
+    padding: 18px;
+}
+
+.velmore-image-preview {
+    width: 100%;
+    min-height: 270px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    border-radius: 12px;
+    background: linear-gradient(135deg, #fce9e7, #fff5ee);
+}
+
+.velmore-image-preview img {
+    width: 100%;
+    height: 300px;
+    object-fit: contain;
+    padding: 12px;
+    box-sizing: border-box;
+}
+
+.velmore-image-preview img[hidden] {
+    display: none !important;
+}
+
+.velmore-placeholder {
+    padding: 30px 15px;
+    text-align: center;
+}
+
+.velmore-placeholder span {
+    display: block;
+    font-size: 70px;
+}
+
+.velmore-placeholder p {
+    margin: 10px 0 0;
+    color: #92796e;
+    font-size: 12px;
+}
+
+.velmore-preview-details {
+    padding: 20px 4px;
+}
+
+.velmore-preview-label {
+    color: #92796e;
+    font-size: 9px;
+    font-weight: 800;
+    letter-spacing: 1.5px;
+}
+
+.velmore-preview-details h3 {
+    margin: 6px 0 15px;
+    color: var(--velmore-brown);
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 23px;
+    overflow-wrap: anywhere;
+}
+
+.velmore-preview-price {
+    margin: 5px 0 15px;
+    color: var(--velmore-pink-dark);
+    font-size: 24px;
+    font-weight: 800;
+}
+
+.velmore-preview-description {
+    color: #806f64;
+    font-size: 12px;
+    line-height: 1.8;
+    overflow-wrap: anywhere;
+}
+
+.velmore-image-tips {
+    padding: 18px;
+    border-radius: 12px;
+    background: #fff0ed;
+}
+
+.velmore-image-tips h3 {
+    margin: 0 0 12px;
+    color: var(--velmore-brown);
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 16px;
+}
+
+.velmore-image-tips ul {
+    margin: 0;
+    padding-left: 20px;
+    color: #70564b;
+    font-size: 12px;
+    line-height: 1.9;
+}
+
+/* RESPONSIVE LAYOUT */
+
+@media (max-width: 1000px) {
+    .velmore-content-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .velmore-preview-card {
+        order: -1;
+    }
+
+    .velmore-image-preview {
+        min-height: 220px;
+    }
+
+    .velmore-image-preview img {
+        height: 250px;
+    }
+}
+
+@media (max-width: 600px) {
+    #content {
+        padding: 12px !important;
+    }
+
+    #header {
+        padding: 12px 15px;
+        flex-wrap: wrap;
+    }
+
+    #branding h1,
+    #branding h1 a {
+        font-size: 19px;
+    }
+
+    .velmore-page-heading {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .velmore-card-heading {
+        padding: 15px;
+    }
+
+    .velmore-form-body {
+        padding: 12px 15px;
+    }
+
+    .velmore-form-actions {
+        padding: 15px;
+    }
+
+    .velmore-form-actions .submit-row {
+        flex-direction: column;
+    }
+
+    .velmore-form-actions input[type="submit"] {
+        width: 100%;
+    }
+}

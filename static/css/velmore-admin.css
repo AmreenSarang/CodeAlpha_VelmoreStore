@@ -1,0 +1,288 @@
+
+/* ==========================================
+   VELMORE STUDIO — ADMIN THEME
+   ========================================== */
+
+:root {
+    --chocolate: #59372c;
+    --chocolate-dark: #38221c;
+    --blush: #df7d88;
+    --cream: #fff9f4;
+    --peach: #fff1e9;
+    --border: #f0d6cb;
+    --text: #38221c;
+}
+
+/* Overall page */
+html,
+body {
+    background: var(--cream) !important;
+    color: var(--text) !important;
+    font-family: "Segoe UI", Arial, sans-serif;
+}
+
+#container {
+    background: var(--cream) !important;
+    min-height: 100vh;
+}
+
+/* Header */
+#header {
+    background: linear-gradient(
+        135deg,
+        var(--chocolate-dark),
+        var(--chocolate)
+    ) !important;
+    color: var(--cream) !important;
+    border-bottom: 4px solid var(--blush);
+    padding: 16px 24px;
+}
+
+#site-name a,
+#header a,
+#user-tools,
+#user-tools a {
+    color: var(--cream) !important;
+}
+
+#site-name a {
+    font-family: Georgia, serif;
+    font-size: 26px;
+    font-weight: normal;
+}
+
+#header a:hover,
+#user-tools a:hover {
+    color: var(--blush) !important;
+}
+
+/* Breadcrumbs */
+div.breadcrumbs {
+    background: var(--peach) !important;
+    color: var(--chocolate) !important;
+    border-bottom: 1px solid var(--border);
+    padding: 13px 24px;
+}
+
+div.breadcrumbs a {
+    color: var(--chocolate) !important;
+}
+
+/* Main content */
+#content {
+    padding: 28px;
+}
+
+#content h1,
+#content h2,
+#content h3 {
+    color: var(--chocolate-dark);
+}
+
+/* Sidebar */
+#nav-sidebar {
+    background: #fffdf9 !important;
+    border-right: 1px solid var(--border);
+}
+
+#nav-sidebar .module caption,
+#nav-sidebar .module th {
+    background: var(--chocolate) !important;
+    color: var(--cream) !important;
+}
+
+#nav-sidebar a {
+    color: var(--chocolate) !important;
+}
+
+#nav-sidebar a:hover,
+#nav-sidebar .current-model {
+    background: var(--peach) !important;
+    color: var(--chocolate-dark) !important;
+}
+
+/* Modules and cards */
+.module,
+.inline-group,
+#changelist,
+#changelist-filter {
+    background: #ffffff;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.module caption,
+.module h2,
+.inline-group h2 {
+    background: var(--chocolate) !important;
+    color: var(--cream) !important;
+    padding: 12px 15px;
+}
+
+/* Table headings */
+#result_list thead th {
+    background: var(--peach) !important;
+    color: var(--chocolate) !important;
+    border-bottom: 1px solid var(--border);
+}
+
+#result_list tbody tr:nth-child(even) {
+    background: #fffcf9;
+}
+
+#result_list tbody tr:hover {
+    background: #fce9e5 !important;
+}
+
+#result_list td,
+#result_list th {
+    padding: 12px;
+    border-color: var(--border);
+}
+
+#result_list a {
+    color: var(--chocolate) !important;
+    font-weight: 500;
+}
+
+#result_list a:hover {
+    color: #c96775 !important;
+}
+
+/* Links */
+a:link,
+a:visited {
+    color: var(--chocolate);
+}
+
+a:hover {
+    color: #c96775;
+}
+
+/* Buttons */
+.button,
+input[type="submit"],
+input[type="button"],
+.submit-row input,
+a.button,
+.object-tools a {
+    background: var(--chocolate) !important;
+    color: var(--cream) !important;
+    border: 1px solid var(--chocolate) !important;
+    border-radius: 6px !important;
+    padding: 9px 14px !important;
+    font-weight: 600;
+}
+
+.button:hover,
+input[type="submit"]:hover,
+input[type="button"]:hover,
+.submit-row input:hover,
+a.button:hover,
+.object-tools a:hover {
+    background: var(--blush) !important;
+    color: var(--chocolate-dark) !important;
+    border-color: var(--blush) !important;
+}
+
+/* Delete action */
+.deletelink,
+a.deletelink {
+    background: #b94b50 !important;
+    color: #ffffff !important;
+}
+
+/* Form controls */
+input[type="text"],
+input[type="password"],
+input[type="email"],
+input[type="number"],
+input[type="url"],
+input[type="date"],
+input[type="datetime-local"],
+textarea,
+select {
+    background: #ffffff;
+    color: var(--chocolate-dark);
+    border: 1px solid #e7cfc4 !important;
+    border-radius: 6px !important;
+    padding: 8px 10px;
+    max-width: 100%;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+    border-color: var(--blush) !important;
+    outline: 2px solid rgb(223 125 136 / 18%);
+}
+
+/* Search */
+#changelist-search {
+    background: #fffcf9;
+    padding: 14px;
+    border-bottom: 1px solid var(--border);
+}
+
+/* Filters */
+#changelist-filter h2 {
+    background: var(--chocolate) !important;
+    color: var(--cream) !important;
+}
+
+#changelist-filter h3 {
+    color: var(--chocolate);
+}
+
+#changelist-filter a {
+    color: var(--chocolate) !important;
+}
+
+/* Messages */
+.messagelist li.success {
+    background: #edf5ea !important;
+    color: #315d34 !important;
+}
+
+.messagelist li.warning {
+    background: #fff3e2 !important;
+    color: #80521f !important;
+}
+
+.messagelist li.error {
+    background: #fcebec !important;
+    color: #a52f38 !important;
+}
+
+/* Footer */
+#footer {
+    background: linear-gradient(
+        135deg,
+        var(--chocolate-dark),
+        var(--chocolate)
+    ) !important;
+    color: var(--cream) !important;
+    border-top: 4px solid var(--blush);
+    padding: 18px;
+    text-align: center;
+}
+
+/* Mobile layout */
+@media (max-width: 767px) {
+    #content {
+        padding: 14px;
+    }
+
+    #site-name a {
+        font-size: 21px;
+    }
+
+    #changelist {
+        overflow-x: auto;
+    }
+
+    #result_list {
+        min-width: 600px;
+    }
+}

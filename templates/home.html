@@ -1,0 +1,746 @@
+
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Discover delicious homemade treats at Velmore Studio.">
+    <title>Velmore Studio | Homemade with Love</title>
+
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+    <style>
+        :root {
+            --brown: #59372c;
+            --dark: #38221c;
+            --brown-light: #85675b;
+            --pink: #df7d88;
+            --pink-dark: #bd5968;
+            --cream: #fffaf4;
+            --cream-light: #fff3eb;
+            --border: #ead9cf;
+            --green: #51764b;
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            margin: 0;
+            background: var(--cream);
+            color: var(--brown);
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        a { color: inherit; }
+
+        .site-header {
+            position: sticky;
+            top: 0;
+            z-index: 20;
+            background: rgba(255, 250, 244, .97);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .header-inner {
+            max-width: 1250px;
+            min-height: 78px;
+            margin: auto;
+            padding: 14px 5%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+        }
+
+        .brand {
+            color: var(--brown);
+            font: bold 25px Georgia, serif;
+            letter-spacing: 1px;
+            text-decoration: none;
+            white-space: nowrap;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 23px;
+        }
+
+        .nav-links a {
+            color: var(--brown);
+            font-size: 14px;
+            text-decoration: none;
+        }
+
+        .nav-links a:hover { color: var(--pink-dark); }
+
+        .nav-button {
+            padding: 10px 17px;
+            border-radius: 4px;
+            background: var(--brown);
+            color: white !important;
+        }
+
+        .nav-button:hover { background: var(--dark); }
+
+        .messages {
+            max-width: 1150px;
+            margin: 18px auto 0;
+            padding: 0 20px;
+        }
+
+        .message {
+            margin-bottom: 10px;
+            padding: 13px 16px;
+            border: 1px solid var(--border);
+            border-radius: 5px;
+            background: white;
+            font-size: 14px;
+        }
+
+        .message.success { color: #315b2b; background: #f1faee; }
+        .message.error { color: #9b2f2f; background: #fff0f0; }
+        .message.warning { color: #785b19; background: #fff8e8; }
+
+        .hero {
+            max-width: 1250px;
+            min-height: 460px;
+            margin: auto;
+            padding: 55px 5%;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            align-items: center;
+            gap: 45px;
+        }
+
+        .eyebrow {
+            margin: 0 0 16px;
+            color: var(--pink-dark);
+            font-size: 12px;
+            font-weight: bold;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
+
+        .hero h1 {
+            max-width: 600px;
+            margin: 0;
+            color: var(--dark);
+            font: 500 clamp(40px, 5vw, 66px)/1.12 Georgia, serif;
+        }
+
+        .hero h1 span { color: var(--pink-dark); }
+
+        .hero-description {
+            max-width: 480px;
+            margin: 22px 0;
+            color: var(--brown-light);
+            font-size: 15px;
+            line-height: 1.9;
+        }
+
+        .button {
+            min-height: 45px;
+            padding: 13px 22px;
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            border: 1px solid transparent;
+            border-radius: 4px;
+            background: var(--brown);
+            color: white;
+            font-size: 14px;
+            font-weight: bold;
+            text-align: center;
+            text-decoration: none;
+            cursor: pointer;
+            transition: background .2s ease;
+        }
+
+        .button:hover { background: var(--dark); }
+
+        .button:disabled {
+            background: #a89a93;
+            cursor: not-allowed;
+        }
+
+        .hero-image {
+            width: 100%;
+            height: 365px;
+            display: block;
+            object-fit: cover;
+            border-radius: 48% 48% 5px 5px;
+            background: var(--cream-light);
+        }
+
+        .features {
+            padding: 25px 5%;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            background: var(--cream-light);
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .feature {
+            max-width: 350px;
+            margin: auto;
+            padding: 12px;
+            text-align: center;
+        }
+
+        .feature-icon { font-size: 27px; }
+
+        .feature h3 {
+            margin: 10px 0 7px;
+            color: var(--brown);
+            font: bold 17px Georgia, serif;
+        }
+
+        .feature p {
+            margin: 0;
+            color: var(--brown-light);
+            font-size: 13px;
+            line-height: 1.7;
+        }
+
+        .products-section {
+            max-width: 1250px;
+            margin: auto;
+            padding: 75px 5%;
+        }
+
+        .section-heading {
+            margin-bottom: 32px;
+            text-align: center;
+        }
+
+        .section-heading h2 {
+            margin: 0 0 12px;
+            color: var(--dark);
+            font: 500 clamp(30px, 4vw, 43px) Georgia, serif;
+        }
+
+        .section-heading p {
+            margin: 0;
+            color: var(--brown-light);
+            font-size: 14px;
+            line-height: 1.8;
+        }
+
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 27px;
+        }
+
+        .product-card {
+            overflow: hidden;
+            border: 1px solid var(--border);
+            border-radius: 7px;
+            background: white;
+            transition: transform .2s ease, box-shadow .2s ease;
+        }
+
+        .product-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 28px rgba(56, 34, 28, .08);
+        }
+
+        .product-image-wrap {
+            position: relative;
+            height: 255px;
+            overflow: hidden;
+            background: var(--cream-light);
+        }
+
+        .product-image {
+            width: 100%;
+            height: 100%;
+            display: block;
+            object-fit: cover;
+            transition: transform .3s ease;
+        }
+
+        .product-card:hover .product-image { transform: scale(1.035); }
+
+        .product-placeholder {
+            height: 100%;
+            display: grid;
+            place-items: center;
+            font-size: 60px;
+        }
+
+        .stock-badge {
+            position: absolute;
+            top: 12px;
+            left: 12px;
+            padding: 7px 10px;
+            border-radius: 3px;
+            background: white;
+            color: var(--green);
+            font-size: 11px;
+            font-weight: bold;
+        }
+
+        .stock-badge.out-of-stock {
+            color: #a52e35;
+        }
+
+        .product-info { padding: 20px; }
+
+        .product-name {
+            margin: 0 0 10px;
+            color: var(--dark);
+            font: 21px/1.4 Georgia, serif;
+            overflow-wrap: anywhere;
+        }
+
+        .product-name a { text-decoration: none; }
+        .product-name a:hover { color: var(--pink-dark); }
+
+        .product-description {
+            min-height: 42px;
+            margin: 0 0 15px;
+            color: var(--brown-light);
+            font-size: 13px;
+            line-height: 1.7;
+        }
+
+        .product-bottom {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .product-price {
+            color: var(--pink-dark);
+            font-size: 19px;
+            font-weight: bold;
+            white-space: nowrap;
+        }
+
+        .add-cart-form { margin: 0; }
+
+        .add-cart-btn {
+            padding: 11px 14px;
+            border: 0;
+            border-radius: 4px;
+            background: var(--brown);
+            color: white;
+            font-size: 12px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .add-cart-btn:hover:not(:disabled) { background: var(--pink-dark); }
+
+        .add-cart-btn:disabled {
+            background: #b6a9a2;
+            cursor: not-allowed;
+        }
+
+        .empty-products {
+            grid-column: 1 / -1;
+            padding: 45px 20px;
+            border: 1px dashed var(--border);
+            border-radius: 7px;
+            text-align: center;
+        }
+
+        .empty-products h3 {
+            color: var(--brown);
+            font: 24px Georgia, serif;
+        }
+
+        .empty-products p {
+            color: var(--brown-light);
+            font-size: 14px;
+        }
+
+        .closing-banner {
+            padding: 55px 5%;
+            background: var(--cream-light);
+            border-top: 1px solid var(--border);
+            text-align: center;
+        }
+
+        .closing-banner h2 {
+            margin: 0 0 13px;
+            color: var(--dark);
+            font: 500 clamp(27px, 4vw, 38px) Georgia, serif;
+        }
+
+        .closing-banner p {
+            margin: 0 0 22px;
+            color: var(--brown-light);
+            font-size: 14px;
+        }
+
+        .site-footer {
+            border-top: 4px solid var(--pink);
+            background: var(--cream-light);
+        }
+
+        .footer-main {
+            max-width: 1250px;
+            margin: auto;
+            padding: 38px 5%;
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr;
+            gap: 30px;
+        }
+
+        .footer-brand h2,
+        .footer-main h3 {
+            margin: 0 0 14px;
+            color: var(--brown);
+            font-family: Georgia, serif;
+        }
+
+        .footer-brand h2 { font-size: 22px; }
+        .footer-main h3 { font-size: 17px; }
+
+        .footer-main p,
+        .footer-main a {
+            color: var(--brown-light);
+            font-size: 13px;
+            line-height: 1.8;
+            text-decoration: none;
+        }
+
+        .footer-main a:hover { color: var(--pink-dark); }
+
+        .footer-main ul {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+
+        .footer-main li { margin-bottom: 7px; }
+
+        .footer-bottom {
+            max-width: 1250px;
+            margin: auto;
+            padding: 20px 5%;
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 12px;
+            border-top: 1px solid var(--border);
+        }
+
+        .footer-bottom p {
+            margin: 0;
+            color: var(--brown-light);
+            font-size: 12px;
+        }
+
+        .heart { color: var(--pink-dark); }
+
+        @media (max-width: 900px) {
+            .hero { gap: 25px; }
+            .product-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+            .product-image-wrap { height: 230px; }
+        }
+
+        @media (max-width: 650px) {
+            .header-inner {
+                justify-content: center;
+                flex-direction: column;
+            }
+
+            .nav-links {
+                justify-content: center;
+                gap: 13px;
+            }
+
+            .nav-links a { font-size: 12px; }
+
+            .hero {
+                grid-template-columns: 1fr;
+                padding-top: 40px;
+            }
+
+            .hero-image { height: 290px; }
+
+            .features { grid-template-columns: 1fr; gap: 8px; }
+
+            .products-section { padding: 48px 5%; }
+
+            .product-grid { grid-template-columns: 1fr; }
+
+            .product-image-wrap { height: 280px; }
+
+            .footer-main { grid-template-columns: 1fr 1fr; gap: 25px 15px; }
+
+            .footer-brand { grid-column: 1 / -1; }
+
+            .footer-bottom { flex-direction: column; }
+        }
+    </style>
+</head>
+
+<body>
+
+
+{% load static %}
+
+<header class="site-header">
+<nav class="navbar">
+    <!-- BRAND LOGO -->
+    <a href="{% url 'home' %}" class="brand">
+        <img
+            src="{% static 'images/logo.png' %}"
+            alt="Velmore Studio logo"
+            class="brand-logo"
+        >
+
+        <span class="brand-text">
+            <strong>VELMORE STUDIO</strong>
+            <small>HOMEMADE WITH LOVE</small>
+        </span>
+    </a>
+
+    <!-- NAVIGATION LINKS -->
+    <div class="nav-links">
+        <a href="{% url 'home' %}" class="nav-link">
+            Home
+        </a>
+
+        <a href="{% url 'home' %}#products" class="nav-link">
+            Shop
+        </a>
+
+        <a href="{% url 'cart' %}" class="nav-cart">
+            ♡ Cart
+        </a>
+
+        {% if user.is_authenticated %}
+
+            <a href="{% url 'orders' %}" class="nav-link">
+                My Orders
+            </a>
+
+            {% if user.is_staff %}
+                <a href="{% url 'admin_dashboard' %}" class="nav-link">
+                    Admin Dashboard
+                </a>
+            {% endif %}
+
+            <form method="post" action="{% url 'logout' %}">
+                {% csrf_token %}
+                <button type="submit" class="nav-link nav-logout">
+                    Logout
+                </button>
+            </form>
+
+        {% else %}
+
+            <a href="{% url 'login' %}" class="nav-link">
+                Login
+            </a>
+
+            <a href="{% url 'register' %}" class="nav-link nav-register">
+                Create Account
+            </a>
+
+        {% endif %}
+    </div>
+</nav>
+
+</header>
+
+
+{% if messages %}
+    <div class="messages" aria-live="polite">
+        {% for message in messages %}
+            <div class="message {{ message.tags }}">{{ message }}</div>
+        {% endfor %}
+    </div>
+{% endif %}
+
+<main>
+    <section class="hero">
+        <div>
+            <p class="eyebrow">Freshly made · Always from the heart</p>
+
+            <h1>Sweet moments, <span>beautifully baked.</span></h1>
+
+            <p class="hero-description">
+                Discover delightful treats made with care at Velmore Studio.
+                Find your favourites and make every little celebration sweeter.
+            </p>
+
+            <a href="#products" class="button">Explore Our Desserts →</a>
+        </div>
+
+        <div>
+            <img
+                class="hero-image"
+                src="https://images.unsplash.com/photo-1578985545062-69928b1d9587?auto=format&fit=crop&w=1000&q=85"
+                alt="Beautifully decorated celebration cake"
+            >
+        </div>
+    </section>
+
+    <section class="features" aria-label="Our values">
+        <div class="feature">
+            <div class="feature-icon">♡</div>
+            <h3>Made with Love</h3>
+            <p>Thoughtfully prepared treats for life's special moments.</p>
+        </div>
+
+        <div class="feature">
+            <div class="feature-icon">✧</div>
+            <h3>Quality Ingredients</h3>
+            <p>A delicious experience starts with attention to every detail.</p>
+        </div>
+
+        <div class="feature">
+            <div class="feature-icon">🎁</div>
+            <h3>Perfect for Sharing</h3>
+            <p>Find something lovely to gift, celebrate, or enjoy together.</p>
+        </div>
+    </section>
+
+    <section class="products-section" id="products">
+        <div class="section-heading">
+            <p class="eyebrow">A little something sweet</p>
+            <h2>Our Desserts</h2>
+            <p>Explore our collection and choose a treat made for you.</p>
+        </div>
+
+        <div class="product-grid">
+            {% for product in products %}
+                <article class="product-card">
+                    <a
+                        href="{% url 'product_detail' product.id %}"
+                        aria-label="View {{ product.name }}"
+                    >
+                        <div class="product-image-wrap">
+                            {% if product.image %}
+                                <img
+                                    class="product-image"
+                                    src="{{ product.image.url }}"
+                                    alt="{{ product.name }}"
+                                    loading="lazy"
+                                >
+                            {% else %}
+                                <div class="product-placeholder">🍰</div>
+                            {% endif %}
+
+                            {% if product.stock > 0 %}
+                                <span class="stock-badge">Available</span>
+                            {% else %}
+                                <span class="stock-badge out-of-stock">Out of Stock</span>
+                            {% endif %}
+                        </div>
+                    </a>
+
+                    <div class="product-info">
+                        <h3 class="product-name">
+                            <a href="{% url 'product_detail' product.id %}">
+                                {{ product.name }}
+                            </a>
+                        </h3>
+
+                        <p class="product-description">
+                            {{ product.description|truncatewords:15 }}
+                        </p>
+
+                        <div class="product-bottom">
+                            <span class="product-price">
+                                ₹{{ product.price|floatformat:2 }}
+                            </span>
+
+                            <!-- IMPORTANT: ADD TO CART USES POST, NOT A LINK -->
+                            <form
+                                class="add-cart-form"
+                                method="post"
+                                action="{% url 'add_to_cart' product.id %}"
+                            >
+                                {% csrf_token %}
+                                <button
+                                    class="add-cart-btn"
+                                    type="submit"
+                                    {% if product.stock <= 0 %}disabled{% endif %}
+                                >
+                                    {% if product.stock > 0 %}
+                                        Add to Cart
+                                    {% else %}
+                                        Out of Stock
+                                    {% endif %}
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </article>
+            {% empty %}
+                <div class="empty-products">
+                    <div style="font-size:48px;">🧁</div>
+                    <h3>Our collection is being prepared</h3>
+                    <p>Please check back soon for our delicious treats.</p>
+                </div>
+            {% endfor %}
+        </div>
+    </section>
+
+    <section class="closing-banner">
+        <h2>Make today a little sweeter.</h2>
+        <p>Find your next favourite treat at Velmore Studio.</p>
+        <a href="#products" class="button">Shop Our Collection</a>
+    </section>
+</main>
+
+<footer class="site-footer">
+    <div class="footer-main">
+        <div class="footer-brand">
+            <h2>VELMORE STUDIO</h2>
+            <p>Homemade with love, shared with happiness.</p>
+        </div>
+
+        <div>
+            <h3>Quick Links</h3>
+            <ul>
+                <li><a href="{% url 'home' %}">Home</a></li>
+                <li><a href="#products">Our Desserts</a></li>
+                <li><a href="{% url 'cart' %}">Shopping Cart</a></li>
+            </ul>
+        </div>
+
+        <div>
+            <h3>Your Account</h3>
+            <ul>
+                {% if user.is_authenticated %}
+                    <li><a href="{% url 'orders' %}">My Orders</a></li>
+                    <li>
+                        <form method="post" action="{% url 'logout' %}">
+                            {% csrf_token %}
+                            <button
+                                type="submit"
+                                style="padding:0;border:0;background:transparent;color:inherit;cursor:pointer;font:inherit;"
+                            >Logout</button>
+                        </form>
+                    </li>
+                {% else %}
+                    <li><a href="{% url 'login' %}">Login</a></li>
+                    <li><a href="{% url 'register' %}">Register</a></li>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+
+    <div class="footer-bottom">
+        <p>&copy; {% now "Y" %} Velmore Studio. All rights reserved.</p>
+        <p>Made with <span class="heart">♡</span> and a little sugar.</p>
+    </div>
+</footer>
+
+</body>
+</html>

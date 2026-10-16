@@ -1,0 +1,1291 @@
+
+/* =========================================================
+   VELMORE STUDIO — ADMIN DASHBOARD
+   Theme: Cream • Chocolate Brown • Blush Pink • Peach
+   File: static/css/admin-dashboard.css
+   ========================================================= */
+
+/* ---------- 1. Color Variables ---------- */
+
+:root {
+    --velmore-cream: #FFF9F4;
+    --velmore-light-cream: #FFFCF8;
+    --velmore-peach: #FFF1E9;
+    --velmore-blush-light: #F5DCD5;
+    --velmore-pink: #DF7D88;
+    --velmore-pink-dark: #C96775;
+    --velmore-chocolate: #59372C;
+    --velmore-dark: #38221C;
+    --velmore-brown: #795447;
+    --velmore-muted: #92796E;
+    --velmore-border: #F0D6CB;
+    --velmore-white: #FFFFFF;
+    --velmore-green: #527A53;
+    --velmore-green-bg: #EDF5EA;
+    --velmore-orange: #B97735;
+    --velmore-orange-bg: #FFF3E2;
+    --velmore-red: #B94B50;
+    --velmore-red-bg: #FCEBEC;
+
+    --shadow-soft: 0 4px 18px rgba(56, 34, 28, 0.06);
+    --shadow-card: 0 8px 25px rgba(56, 34, 28, 0.07);
+
+    --radius-sm: 8px;
+    --radius-md: 12px;
+    --radius-lg: 18px;
+
+    --sidebar-width: 255px;
+}
+
+/* ---------- 2. Reset and Base ---------- */
+
+* {
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    background: var(--velmore-cream);
+    color: var(--velmore-dark);
+    font-family: "Segoe UI", Arial, sans-serif;
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+a {
+    color: var(--velmore-chocolate);
+    text-decoration: none;
+    transition: color 0.2s ease, background 0.2s ease;
+}
+
+a:hover {
+    color: var(--velmore-pink-dark);
+}
+
+button,
+input,
+select,
+textarea {
+    font: inherit;
+}
+
+button {
+    cursor: pointer;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    margin-top: 0;
+    color: var(--velmore-dark);
+    line-height: 1.35;
+}
+
+p {
+    color: var(--velmore-muted);
+}
+
+/* ---------- 3. Dashboard Layout ---------- */
+
+.dashboard-layout {
+    display: flex;
+    min-height: 100vh;
+    width: 100%;
+    background: var(--velmore-cream);
+}
+
+.main-content {
+    flex: 1;
+    min-width: 0;
+    margin-left: var(--sidebar-width);
+    padding: 30px;
+    background: var(--velmore-cream);
+    transition: margin 0.25s ease;
+}
+
+/* ---------- 4. Sidebar ---------- */
+
+.sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+    width: var(--sidebar-width);
+    height: 100vh;
+    overflow-y: auto;
+    padding: 24px 16px;
+    background: linear-gradient(
+        145deg,
+        var(--velmore-dark),
+        var(--velmore-chocolate)
+    );
+    color: var(--velmore-cream);
+    border-right: 1px solid var(--velmore-pink);
+}
+
+.sidebar::-webkit-scrollbar {
+    width: 5px;
+}
+
+.sidebar::-webkit-scrollbar-thumb {
+    background: rgba(255, 250, 244, 0.25);
+    border-radius: 10px;
+}
+
+.sidebar-logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 0 8px 24px;
+    margin-bottom: 20px;
+    border-bottom: 1px solid rgba(255, 250, 244, 0.18);
+}
+
+.sidebar-logo img {
+    width: 42px;
+    height: 42px;
+    object-fit: contain;
+    border-radius: 8px;
+    background: var(--velmore-cream);
+}
+
+.sidebar-logo h2,
+.sidebar-logo h3,
+.sidebar-logo p {
+    margin: 0;
+    color: var(--velmore-cream);
+}
+
+.sidebar-logo h2,
+.sidebar-logo h3 {
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 16px;
+    letter-spacing: 0.5px;
+}
+
+.sidebar-logo p {
+    margin-top: 3px;
+    font-size: 10px;
+    color: var(--velmore-blush-light);
+}
+
+.sidebar-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.sidebar-nav a,
+.sidebar a {
+    transition: background 0.2s ease, color 0.2s ease;
+}
+
+.sidebar-nav a {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 14px;
+    color: var(--velmore-cream);
+    border-radius: var(--radius-sm);
+    font-size: 13px;
+}
+
+.sidebar-nav a:hover,
+.sidebar-nav a.active,
+.sidebar a.active {
+    background: var(--velmore-pink);
+    color: var(--velmore-dark);
+}
+
+.sidebar-nav a.active {
+    font-weight: 700;
+}
+
+.sidebar-nav a .icon,
+.sidebar-nav a i {
+    width: 20px;
+    text-align: center;
+}
+
+.sidebar-section-title {
+    margin: 22px 12px 8px;
+    color: var(--velmore-blush-light);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+}
+
+.sidebar-bottom {
+    margin-top: auto;
+    padding-top: 20px;
+}
+
+.sidebar-bottom a {
+    display: block;
+    padding: 11px 14px;
+    color: var(--velmore-cream);
+    border-radius: var(--radius-sm);
+}
+
+.sidebar-bottom a:hover {
+    background: var(--velmore-pink);
+    color: var(--velmore-dark);
+}
+
+/* ---------- 5. Dashboard Header ---------- */
+
+.dashboard-header,
+.top-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 18px;
+    margin-bottom: 28px;
+    padding: 20px 24px;
+    background: var(--velmore-light-cream);
+    border: 1px solid var(--velmore-border);
+    border-radius: var(--radius-md);
+}
+
+.header-title h1,
+.dashboard-header h1,
+.top-header h1 {
+    margin: 0;
+    color: var(--velmore-dark);
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: clamp(22px, 2vw, 30px);
+    font-weight: 500;
+}
+
+.header-title p,
+.dashboard-header p,
+.top-header p {
+    margin: 6px 0 0;
+    color: var(--velmore-muted);
+    font-size: 12px;
+}
+
+.header-actions {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.header-user {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--velmore-chocolate);
+}
+
+.user-avatar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background: var(--velmore-blush-light);
+    color: var(--velmore-dark);
+    font-weight: 700;
+}
+
+/* ---------- 6. Welcome Banner ---------- */
+
+.welcome-banner,
+.today-banner {
+    position: relative;
+    overflow: hidden;
+    margin-bottom: 26px;
+    padding: 25px 28px;
+    background: linear-gradient(
+        120deg,
+        var(--velmore-peach),
+        var(--velmore-blush-light)
+    );
+    border: 1px solid var(--velmore-border);
+    border-left: 4px solid var(--velmore-pink);
+    border-radius: var(--radius-lg);
+}
+
+.welcome-banner h2,
+.today-banner h2 {
+    margin-bottom: 8px;
+    color: var(--velmore-dark);
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 23px;
+    font-weight: 500;
+}
+
+.welcome-banner p,
+.today-banner p {
+    margin-bottom: 0;
+    color: var(--velmore-brown);
+}
+
+/* ---------- 7. Section Headings ---------- */
+
+.section-heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin: 30px 0 18px;
+}
+
+.section-heading h2,
+.section-heading h3 {
+    margin: 0;
+    color: var(--velmore-dark);
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 20px;
+    font-weight: 500;
+}
+
+.section-heading p {
+    margin: 5px 0 0;
+    font-size: 12px;
+}
+
+/* ---------- 8. Statistics Grid ---------- */
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 18px;
+    margin-bottom: 26px;
+}
+
+.stat-card {
+    position: relative;
+    overflow: hidden;
+    min-width: 0;
+    padding: 22px;
+    background: var(--velmore-white);
+    border: 1px solid var(--velmore-border);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-soft);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.stat-card:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-card);
+}
+
+.stat-card::before {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background: var(--velmore-pink);
+    content: "";
+}
+
+.stat-card:nth-child(2)::before {
+    background: var(--velmore-chocolate);
+}
+
+.stat-card:nth-child(3)::before {
+    background: #C79A65;
+}
+
+.stat-card:nth-child(4)::before {
+    background: #B98C9A;
+}
+
+.stat-card-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 10px;
+}
+
+.stat-card-label {
+    margin: 0 0 10px;
+    color: var(--velmore-muted);
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.stat-card h2,
+.stat-card h3 {
+    margin: 0;
+    color: var(--velmore-dark);
+    font-size: clamp(22px, 2vw, 30px);
+    font-weight: 600;
+    overflow-wrap: anywhere;
+}
+
+.stat-card-description {
+    margin: 12px 0 0;
+    color: var(--velmore-muted);
+    font-size: 11px;
+}
+
+.stat-icon {
+    display: flex;
+    flex-shrink: 0;
+    justify-content: center;
+    align-items: center;
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    background: var(--velmore-peach);
+    color: var(--velmore-chocolate);
+    font-size: 20px;
+}
+
+.stat-card:nth-child(2) .stat-icon {
+    background: #F0E4DC;
+}
+
+.stat-card:nth-child(3) .stat-icon {
+    background: #F7EBD8;
+}
+
+.stat-card:nth-child(4) .stat-icon {
+    background: #F5E4EA;
+}
+
+/* ---------- 9. General Panels ---------- */
+
+.content-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.5fr) minmax(280px, 1fr);
+    gap: 22px;
+    margin-bottom: 26px;
+}
+
+.panel {
+    min-width: 0;
+    padding: 24px;
+    background: var(--velmore-white);
+    border: 1px solid var(--velmore-border);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-soft);
+}
+
+.panel-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-bottom: 20px;
+}
+
+.panel-header h2,
+.panel-header h3 {
+    margin: 0;
+    color: var(--velmore-dark);
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 19px;
+    font-weight: 500;
+}
+
+.panel-header p {
+    margin: 5px 0 0;
+    font-size: 12px;
+}
+
+/* ---------- 10. Sales Chart ---------- */
+
+.chart-container {
+    position: relative;
+    width: 100%;
+    min-height: 250px;
+    overflow: hidden;
+}
+
+.chart {
+    width: 100%;
+    min-height: 250px;
+}
+
+.chart canvas,
+.chart-container canvas {
+    max-width: 100%;
+}
+
+.chart-legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    margin-top: 15px;
+    color: var(--velmore-muted);
+    font-size: 12px;
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+}
+
+.legend-dot {
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background: var(--velmore-pink);
+}
+
+/* ---------- 11. Order Status ---------- */
+
+.status-list {
+    display: flex;
+    flex-direction: column;
+    gap: 17px;
+}
+
+.status-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+}
+
+.status-info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-width: 0;
+}
+
+.status-dot {
+    flex-shrink: 0;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--velmore-pink);
+}
+
+.status-name {
+    color: var(--velmore-brown);
+    font-size: 13px;
+}
+
+.status-count {
+    color: var(--velmore-dark);
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.status-progress {
+    width: 100%;
+    height: 6px;
+    margin-top: 8px;
+    overflow: hidden;
+    background: var(--velmore-peach);
+    border-radius: 20px;
+}
+
+.status-progress-bar {
+    height: 100%;
+    background: var(--velmore-pink);
+    border-radius: 20px;
+}
+
+/* ---------- 12. Tables ---------- */
+
+.table-container {
+    width: 100%;
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+}
+
+thead {
+    background: var(--velmore-peach);
+}
+
+th {
+    padding: 14px 16px;
+    color: var(--velmore-chocolate);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.4px;
+    text-transform: uppercase;
+    white-space: nowrap;
+}
+
+td {
+    padding: 15px 16px;
+    color: var(--velmore-brown);
+    font-size: 12px;
+    border-bottom: 1px solid #F5E9E2;
+    vertical-align: middle;
+}
+
+tbody tr {
+    transition: background 0.2s ease;
+}
+
+tbody tr:hover {
+    background: var(--velmore-light-cream);
+}
+
+tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.table-link {
+    color: var(--velmore-chocolate);
+    font-weight: 700;
+}
+
+.table-link:hover {
+    color: var(--velmore-pink-dark);
+}
+
+.order-number {
+    color: var(--velmore-chocolate);
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+/* ---------- 13. Status Badges ---------- */
+
+.badge,
+.status-badge {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    padding: 5px 10px;
+    border-radius: 30px;
+    font-size: 10px;
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+.badge-pending,
+.status-pending {
+    background: var(--velmore-orange-bg);
+    color: #966025;
+}
+
+.badge-confirmed,
+.status-confirmed {
+    background: #EDE8F8;
+    color: #69559B;
+}
+
+.badge-shipped,
+.status-shipped {
+    background: #E7F0FC;
+    color: #3567A0;
+}
+
+.badge-delivered,
+.status-delivered {
+    background: var(--velmore-green-bg);
+    color: var(--velmore-green);
+}
+
+.badge-cancelled,
+.status-cancelled {
+    background: var(--velmore-red-bg);
+    color: var(--velmore-red);
+}
+
+/* ---------- 14. Inventory Alerts ---------- */
+
+.inventory-list {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.inventory-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    padding: 13px;
+    background: var(--velmore-light-cream);
+    border: 1px solid #F5E9E2;
+    border-radius: var(--radius-sm);
+}
+
+.inventory-product {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    min-width: 0;
+}
+
+.inventory-product img {
+    width: 45px;
+    height: 45px;
+    flex-shrink: 0;
+    object-fit: cover;
+    border-radius: 8px;
+    background: var(--velmore-peach);
+}
+
+.inventory-product h4 {
+    margin: 0;
+    color: var(--velmore-dark);
+    font-size: 12px;
+    overflow-wrap: anywhere;
+}
+
+.inventory-product p {
+    margin: 4px 0 0;
+    font-size: 11px;
+}
+
+.stock-warning {
+    padding: 5px 9px;
+    background: var(--velmore-orange-bg);
+    color: #966025;
+    border-radius: 20px;
+    font-size: 10px;
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+.stock-danger {
+    padding: 5px 9px;
+    background: var(--velmore-red-bg);
+    color: var(--velmore-red);
+    border-radius: 20px;
+    font-size: 10px;
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+/* ---------- 15. Quick Action Buttons ---------- */
+
+.quick-actions,
+.shortcuts-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+}
+
+.shortcut,
+.quick-action {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    min-width: 0;
+    padding: 15px;
+    background: var(--velmore-light-cream);
+    color: var(--velmore-chocolate);
+    border: 1px solid var(--velmore-border);
+    border-radius: var(--radius-sm);
+    transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.shortcut:hover,
+.quick-action:hover {
+    transform: translateY(-2px);
+    background: var(--velmore-blush-light);
+    color: var(--velmore-dark);
+}
+
+.shortcut-icon,
+.quick-action-icon {
+    display: flex;
+    flex-shrink: 0;
+    justify-content: center;
+    align-items: center;
+    width: 36px;
+    height: 36px;
+    background: var(--velmore-blush-light);
+    border-radius: 9px;
+    font-size: 17px;
+}
+
+.shortcut h4,
+.quick-action h4 {
+    margin: 0;
+    color: var(--velmore-dark);
+    font-size: 12px;
+}
+
+.shortcut p,
+.quick-action p {
+    margin: 4px 0 0;
+    font-size: 10px;
+}
+
+/* ---------- 16. Buttons ---------- */
+
+.btn,
+.btn-primary,
+.btn-secondary,
+.btn-outline,
+.btn-danger {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 16px;
+    border: 1px solid transparent;
+    border-radius: 7px;
+    font-size: 12px;
+    font-weight: 600;
+    text-align: center;
+    cursor: pointer;
+    transition: background 0.2s ease, color 0.2s ease;
+}
+
+.btn-primary {
+    background: var(--velmore-chocolate);
+    color: var(--velmore-cream);
+    border-color: var(--velmore-chocolate);
+}
+
+.btn-primary:hover {
+    background: var(--velmore-pink);
+    color: var(--velmore-dark);
+    border-color: var(--velmore-pink);
+}
+
+.btn-secondary {
+    background: var(--velmore-pink);
+    color: var(--velmore-dark);
+    border-color: var(--velmore-pink);
+}
+
+.btn-secondary:hover {
+    background: var(--velmore-pink-dark);
+    color: var(--velmore-white);
+}
+
+.btn-outline {
+    background: transparent;
+    color: var(--velmore-chocolate);
+    border-color: var(--velmore-border);
+}
+
+.btn-outline:hover {
+    background: var(--velmore-peach);
+    color: var(--velmore-dark);
+}
+
+.btn-danger {
+    background: var(--velmore-red-bg);
+    color: var(--velmore-red);
+    border-color: #F3C8CA;
+}
+
+.btn-danger:hover {
+    background: var(--velmore-red);
+    color: var(--velmore-white);
+}
+
+/* ---------- 17. Forms and Search ---------- */
+
+.form-group {
+    margin-bottom: 18px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 7px;
+    color: var(--velmore-chocolate);
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.form-control,
+.form-group input,
+.form-group select,
+.form-group textarea,
+.search-input {
+    display: block;
+    width: 100%;
+    min-height: 42px;
+    padding: 11px 13px;
+    background: var(--velmore-white);
+    color: var(--velmore-dark);
+    border: 1px solid var(--velmore-border);
+    border-radius: 7px;
+    outline: none;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.form-control:focus,
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus,
+.search-input:focus {
+    border-color: var(--velmore-pink);
+    box-shadow: 0 0 0 3px rgba(223, 125, 136, 0.13);
+}
+
+.form-control::placeholder,
+.search-input::placeholder {
+    color: #B7A39A;
+}
+
+.search-bar {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.search-bar input {
+    flex: 1;
+    min-width: 0;
+}
+
+/* ---------- 18. Django Messages / Alerts ---------- */
+
+.messages {
+    margin-bottom: 20px;
+}
+
+.alert,
+.message {
+    margin-bottom: 12px;
+    padding: 13px 16px;
+    border: 1px solid var(--velmore-border);
+    border-radius: var(--radius-sm);
+    background: var(--velmore-peach);
+    color: var(--velmore-chocolate);
+}
+
+.alert-success,
+.message.success {
+    background: var(--velmore-green-bg);
+    color: var(--velmore-green);
+    border-color: #D3E5CF;
+}
+
+.alert-error,
+.alert-danger,
+.message.error {
+    background: var(--velmore-red-bg);
+    color: var(--velmore-red);
+    border-color: #F3C8CA;
+}
+
+.alert-warning,
+.message.warning {
+    background: var(--velmore-orange-bg);
+    color: #966025;
+    border-color: #F1D8B5;
+}
+
+/* ---------- 19. Empty States ---------- */
+
+.empty-state {
+    padding: 35px 20px;
+    text-align: center;
+    background: var(--velmore-light-cream);
+    border: 1px dashed var(--velmore-border);
+    border-radius: var(--radius-md);
+}
+
+.empty-state h3 {
+    margin-bottom: 8px;
+    color: var(--velmore-chocolate);
+    font-family: Georgia, "Times New Roman", serif;
+    font-weight: 500;
+}
+
+.empty-state p {
+    margin-bottom: 18px;
+    font-size: 12px;
+}
+
+/* ---------- 20. Dashboard Footer ---------- */
+
+.site-footer,
+.dashboard-footer {
+    margin-top: 30px;
+    padding: 28px 24px 18px;
+    background: linear-gradient(
+        135deg,
+        #38221c,
+        #59372c
+    ) !important;
+    color: #FFFAF4 !important;
+    border-top: 4px solid #DF7D88;
+}
+
+.site-footer .footer-brand h2,
+.site-footer .footer-brand h3,
+.site-footer .footer-column h3,
+.site-footer h2,
+.site-footer h3,
+.dashboard-footer h2,
+.dashboard-footer h3 {
+    color: #972a4e !important;
+    opacity: 1 !important;
+}
+
+.site-footer p,
+.site-footer a,
+.site-footer .footer-bottom,
+.site-footer .footer-bottom p,
+.dashboard-footer p,
+.dashboard-footer a {
+    color: #6e1728 !important;
+    opacity: 1 !important;
+}
+
+.site-footer a:hover,
+.dashboard-footer a:hover {
+    color: #DF7D88 !important;
+}
+
+.site-footer .footer-bottom,
+.dashboard-footer .footer-bottom {
+    margin-top: 22px;
+    padding-top: 15px;
+    border-top: 1px solid rgba(255, 250, 244, 0.25) !important;
+    font-size: 11px;
+}
+
+/* ---------- 21. Utility Classes ---------- */
+
+.text-primary {
+    color: var(--velmore-chocolate) !important;
+}
+
+.text-pink {
+    color: var(--velmore-pink-dark) !important;
+}
+
+.text-muted {
+    color: var(--velmore-muted) !important;
+}
+
+.text-success {
+    color: var(--velmore-green) !important;
+}
+
+.text-danger {
+    color: var(--velmore-red) !important;
+}
+
+.bg-cream {
+    background: var(--velmore-cream) !important;
+}
+
+.bg-peach {
+    background: var(--velmore-peach) !important;
+}
+
+.bg-pink {
+    background: var(--velmore-blush-light) !important;
+}
+
+.rounded {
+    border-radius: var(--radius-md);
+}
+
+.shadow-soft {
+    box-shadow: var(--shadow-soft);
+}
+
+.w-100 {
+    width: 100%;
+}
+
+.d-none {
+    display: none !important;
+}
+
+/* ---------- 22. Responsive: Tablet ---------- */
+
+@media (max-width: 1200px) {
+    :root {
+        --sidebar-width: 225px;
+    }
+
+    .main-content {
+        padding: 24px;
+    }
+
+    .stats-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .content-grid {
+        grid-template-columns: minmax(0, 1fr);
+    }
+}
+
+/* ---------- 23. Responsive: Mobile ---------- */
+
+@media (max-width: 768px) {
+    :root {
+        --sidebar-width: 0px;
+    }
+
+    .dashboard-layout {
+        display: block;
+    }
+
+    .sidebar {
+        position: relative;
+        width: 100%;
+        height: auto;
+        max-height: none;
+        padding: 16px;
+        border-right: none;
+        border-bottom: 3px solid var(--velmore-pink);
+    }
+
+    .sidebar-logo {
+        padding-bottom: 14px;
+        margin-bottom: 12px;
+    }
+
+    .sidebar-nav {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 7px;
+    }
+
+    .sidebar-nav a {
+        padding: 10px;
+        font-size: 12px;
+    }
+
+    .sidebar-section-title {
+        margin-top: 15px;
+    }
+
+    .sidebar-bottom {
+        margin-top: 15px;
+        padding-top: 10px;
+    }
+
+    .main-content {
+        width: 100%;
+        margin-left: 0;
+        padding: 18px 14px;
+    }
+
+    .dashboard-header,
+    .top-header {
+        align-items: flex-start;
+        padding: 18px;
+    }
+
+    .header-actions {
+        width: 100%;
+    }
+
+    .welcome-banner,
+    .today-banner {
+        padding: 20px;
+    }
+
+    .welcome-banner h2,
+    .today-banner h2 {
+        font-size: 20px;
+    }
+
+    .stats-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 12px;
+    }
+
+    .stat-card {
+        padding: 16px;
+    }
+
+    .stat-icon {
+        width: 35px;
+        height: 35px;
+        font-size: 16px;
+    }
+
+    .stat-card h2,
+    .stat-card h3 {
+        font-size: 22px;
+    }
+
+    .panel {
+        padding: 17px;
+    }
+
+    .quick-actions,
+    .shortcuts-grid {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    .site-footer,
+    .dashboard-footer {
+        padding: 22px 16px;
+    }
+}
+
+/* ---------- 24. Responsive: Small Mobile ---------- */
+
+@media (max-width: 420px) {
+    .main-content {
+        padding: 13px 10px;
+    }
+
+    .stats-grid {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    .stat-card {
+        padding: 18px;
+    }
+
+    .dashboard-header h1,
+    .top-header h1 {
+        font-size: 22px;
+    }
+
+    .sidebar-nav {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    .panel-header {
+        align-items: flex-start;
+    }
+
+    th,
+    td {
+        padding: 11px 12px;
+    }
+
+    .btn,
+    .btn-primary,
+    .btn-secondary,
+    .btn-outline,
+    .btn-danger {
+        max-width: 100%;
+        padding: 9px 12px;
+    }
+}
+
+body {
+    background: #df7d88 !important;
+}

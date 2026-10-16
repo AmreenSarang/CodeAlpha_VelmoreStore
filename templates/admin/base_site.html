@@ -1,0 +1,121 @@
+
+{% extends "admin/base.html" %}
+{% load static %}
+
+{% block title %}Velmore Studio | Admin{% endblock %}
+
+{% block branding %}
+<div id="site-name" class="velmore-brand">
+    <a href="{% url 'admin:index' %}" class="velmore-brand-link">
+        <img
+            src="{% static 'images/logo.png' %}"
+            alt="Velmore Studio logo"
+            class="velmore-logo"
+        >
+
+        <span class="velmore-brand-text">
+            <strong>VELMORE STUDIO</strong>
+            <small>HOMEMADE WITH LOVE</small>
+        </span>
+    </a>
+</div>
+{% endblock %}
+
+{% block extrastyle %}
+    {{ block.super }}
+    <link
+        rel="stylesheet"
+        href="{% static 'admin/velmore-admin.css' %}?v=5"
+    >
+    <style>
+        #header {
+            background: #fffaf4 !important;
+            color: #38221c !important;
+            border-bottom: 1px solid #ead6ca;
+            min-height: 98px;
+            padding: 0 32px !important;
+            display: flex;
+            align-items: center;
+        }
+
+        #branding {
+            float: none !important;
+            display: flex;
+            align-items: center;
+        }
+
+        #site-name.velmore-brand {
+            margin: 0;
+            padding: 0;
+        }
+
+        .velmore-brand-link {
+            display: flex !important;
+            align-items: center;
+            gap: 14px;
+            text-decoration: none !important;
+        }
+
+        .velmore-logo {
+            width: 54px;
+            height: 54px;
+            object-fit: contain;
+            display: block;
+            flex-shrink: 0;
+        }
+
+        .velmore-brand-text {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .velmore-brand-text strong {
+            color: #38221c !important;
+            font-family: Georgia, "Times New Roman", serif;
+            font-size: 27px;
+            line-height: 1.1;
+            letter-spacing: 0.5px;
+            font-weight: 700;
+        }
+
+        .velmore-brand-text small {
+            color: #896656 !important;
+            font-family: Georgia, "Times New Roman", serif;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 3px;
+        }
+
+        #header #user-tools,
+        #header #user-tools a {
+            color: #59372c !important;
+        }
+
+        #header #user-tools a:hover {
+            color: #df7d88 !important;
+        }
+
+        @media (max-width: 700px) {
+            #header {
+                padding: 12px 16px !important;
+                min-height: 80px;
+                flex-wrap: wrap;
+            }
+
+            .velmore-logo {
+                width: 42px;
+                height: 42px;
+            }
+
+            .velmore-brand-text strong {
+                font-size: 20px;
+            }
+
+            .velmore-brand-text small {
+                font-size: 9px;
+                letter-spacing: 2px;
+            }
+        }
+    </style>
+{% endblock %}

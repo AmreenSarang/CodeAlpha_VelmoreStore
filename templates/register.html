@@ -1,0 +1,716 @@
+
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Create Account | Velmore Studio</title>
+    <meta name="description" content="Create your Velmore Studio account to discover homemade treats and manage your orders.">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --chocolate: #402820;
+            --chocolate-dark: #2f1c17;
+            --brown: #75574b;
+            --pink: #df7d88;
+            --pink-dark: #bd5968;
+            --cream: #fffaf5;
+            --cream-dark: #f8eee6;
+            --white: #ffffff;
+            --muted: #927e75;
+            --border: #eadbd2;
+            --error-bg: #fff0f0;
+            --error-text: #9b3038;
+            --success-bg: #edf7ed;
+            --success-text: #286a38;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            padding: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: "DM Sans", Arial, sans-serif;
+            color: var(--chocolate);
+            background:
+                radial-gradient(circle at 8% 12%, #f8e1df 0, transparent 28%),
+                radial-gradient(circle at 95% 90%, #f3e5d8 0, transparent 30%),
+                var(--cream);
+        }
+
+        a {
+            color: var(--pink-dark);
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        .register-layout {
+            width: 100%;
+            max-width: 1000px;
+            min-height: 640px;
+            display: grid;
+            grid-template-columns: 0.95fr 1.05fr;
+            overflow: hidden;
+            background: var(--white);
+            border: 1px solid rgba(64, 40, 32, 0.08);
+            border-radius: 24px;
+            box-shadow: 0 24px 70px rgba(64, 40, 32, 0.12);
+        }
+
+        /* BRAND PANEL */
+
+        .brand-panel {
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 38px;
+            color: white;
+            background: var(--chocolate);
+        }
+
+        .brand-panel::before,
+        .brand-panel::after {
+            content: "";
+            position: absolute;
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+
+        .brand-panel::before {
+            width: 340px;
+            height: 340px;
+            top: -120px;
+            right: -160px;
+        }
+
+        .brand-panel::after {
+            width: 260px;
+            height: 260px;
+            bottom: -100px;
+            left: -130px;
+        }
+
+        .brand,
+        .brand-copy,
+        .brand-footer {
+            position: relative;
+            z-index: 1;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 13px;
+            color: white;
+        }
+
+        .brand img {
+            width: 54px;
+            height: 54px;
+            padding: 4px;
+            object-fit: contain;
+            border-radius: 13px;
+            background: white;
+        }
+
+        .brand-name {
+            display: block;
+            font-size: 16px;
+            font-weight: 700;
+            letter-spacing: 2px;
+        }
+
+        .brand-tagline {
+            display: block;
+            margin-top: 6px;
+            color: #e9c7bd;
+            font-size: 10px;
+            letter-spacing: 1.7px;
+        }
+
+        .brand-copy {
+            margin: 40px 0;
+        }
+
+        .eyebrow {
+            color: #f2aab2;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .brand-copy h1 {
+            margin: 17px 0;
+            font-family: "Playfair Display", Georgia, serif;
+            font-size: clamp(33px, 4vw, 45px);
+            line-height: 1.2;
+            font-weight: 500;
+        }
+
+        .brand-copy p {
+            max-width: 330px;
+            color: #e5d5ce;
+            font-size: 13px;
+            line-height: 1.9;
+        }
+
+        .benefits {
+            display: grid;
+            gap: 16px;
+            margin-top: 30px;
+        }
+
+        .benefit {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: #f6e8e1;
+            font-size: 12px;
+        }
+
+        .benefit-icon {
+            width: 34px;
+            height: 34px;
+            display: grid;
+            place-items: center;
+            flex-shrink: 0;
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            border-radius: 9px;
+            color: #ffb7c0;
+            font-size: 16px;
+        }
+
+        .brand-footer {
+            color: #cdb5ab;
+            font-size: 11px;
+        }
+
+        /* REGISTRATION FORM */
+
+        .form-panel {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 42px clamp(25px, 5vw, 55px);
+        }
+
+        .mobile-brand {
+            display: none;
+        }
+
+        .form-eyebrow {
+            margin: 0 0 10px;
+            color: var(--pink-dark);
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .form-panel h2 {
+            margin: 0;
+            font-family: "Playfair Display", Georgia, serif;
+            font-size: 33px;
+            font-weight: 600;
+        }
+
+        .form-intro {
+            margin: 12px 0 24px;
+            color: var(--muted);
+            font-size: 12px;
+            line-height: 1.8;
+        }
+
+        .messages {
+            margin-bottom: 16px;
+        }
+
+        .message {
+            padding: 11px 13px;
+            margin-bottom: 9px;
+            border-radius: 9px;
+            font-size: 12px;
+            line-height: 1.6;
+            overflow-wrap: anywhere;
+        }
+
+        .message.error {
+            background: var(--error-bg);
+            color: var(--error-text);
+            border: 1px solid #f2d1d3;
+        }
+
+        .message.success {
+            background: var(--success-bg);
+            color: var(--success-text);
+            border: 1px solid #d5ead5;
+        }
+
+        .message.info,
+        .message.warning {
+            background: #fff5df;
+            color: #78551b;
+            border: 1px solid #f0e0b9;
+        }
+
+        .field {
+            margin-bottom: 16px;
+        }
+
+        .field label {
+            display: block;
+            margin-bottom: 8px;
+            color: var(--chocolate);
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        .field input {
+            display: block;
+            width: 100%;
+            min-height: 45px;
+            padding: 12px 13px;
+            border: 1px solid var(--border);
+            border-radius: 9px;
+            outline: none;
+            background: #fffdfb;
+            color: var(--chocolate);
+            font: inherit;
+            font-size: 12px;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+
+        .field input::placeholder {
+            color: #b5a49b;
+        }
+
+        .field input:focus {
+            border-color: var(--pink);
+            box-shadow: 0 0 0 3px rgba(223, 125, 136, 0.14);
+        }
+
+        .password-wrap {
+            position: relative;
+        }
+
+        .password-wrap input {
+            padding-right: 72px;
+        }
+
+        .toggle-password {
+            position: absolute;
+            top: 50%;
+            right: 11px;
+            transform: translateY(-50%);
+            padding: 5px;
+            border: 0;
+            background: transparent;
+            color: var(--pink-dark);
+            font-family: inherit;
+            font-size: 11px;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        .toggle-password:focus-visible {
+            outline: 2px solid var(--pink-dark);
+            outline-offset: 2px;
+            border-radius: 4px;
+        }
+
+        .field-error {
+            display: block;
+            margin-top: 7px;
+            color: var(--error-text);
+            font-size: 11px;
+            line-height: 1.6;
+        }
+
+        .help-text {
+            display: block;
+            margin-top: 7px;
+            color: var(--muted);
+            font-size: 10px;
+            line-height: 1.6;
+        }
+
+        .submit-button {
+            display: block;
+            width: 100%;
+            min-height: 48px;
+            margin-top: 5px;
+            border: 0;
+            border-radius: 9px;
+            background: var(--chocolate);
+            color: white;
+            font-family: inherit;
+            font-size: 13px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: background 0.2s, transform 0.2s;
+        }
+
+        .submit-button:hover {
+            background: var(--pink-dark);
+            transform: translateY(-1px);
+        }
+
+        .submit-button:focus-visible {
+            outline: 3px solid #f2b4bb;
+            outline-offset: 3px;
+        }
+
+        .login-note {
+            margin: 21px 0 0;
+            text-align: center;
+            color: var(--muted);
+            font-size: 12px;
+            line-height: 1.8;
+        }
+
+        .login-note a {
+            font-weight: 700;
+        }
+
+        .back-home {
+            display: block;
+            margin-top: 19px;
+            text-align: center;
+            color: var(--brown);
+            font-size: 11px;
+        }
+
+        @media (max-width: 760px) {
+            body {
+                padding: 16px;
+            }
+
+            .register-layout {
+                max-width: 480px;
+                min-height: auto;
+                grid-template-columns: 1fr;
+                border-radius: 18px;
+            }
+
+            .brand-panel {
+                display: none;
+            }
+
+            .form-panel {
+                padding: 32px 25px;
+            }
+
+            .mobile-brand {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                gap: 11px;
+                margin-bottom: 28px;
+            }
+
+            .mobile-brand img {
+                width: 46px;
+                height: 46px;
+                object-fit: contain;
+                padding: 3px;
+                border: 1px solid var(--border);
+                border-radius: 10px;
+                background: white;
+            }
+
+            .mobile-brand strong,
+            .mobile-brand small {
+                display: block;
+            }
+
+            .mobile-brand strong {
+                font-size: 13px;
+                letter-spacing: 1.5px;
+            }
+
+            .mobile-brand small {
+                margin-top: 5px;
+                color: var(--muted);
+                font-size: 9px;
+                letter-spacing: 1.2px;
+            }
+
+            .form-panel h2 {
+                font-size: 29px;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *,
+            *::before,
+            *::after {
+                transition: none !important;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <main class="register-layout">
+
+        <!-- BRAND PANEL -->
+        <section class="brand-panel" aria-label="About Velmore Studio">
+
+            <a href="{% url 'home' %}" class="brand">
+                <img src="{% static 'images/logo.png' %}"
+                     alt="Velmore Studio logo">
+
+                <span>
+                    <span class="brand-name">VELMORE STUDIO</span>
+                    <span class="brand-tagline">HOMEMADE WITH LOVE</span>
+                </span>
+            </a>
+
+            <div class="brand-copy">
+                <p class="eyebrow">Join our sweet little world</p>
+
+                <h1>Your next<br>favourite treat<br>is waiting.</h1>
+
+                <p>
+                    Create your account and become part of the
+                    Velmore Studio family. Your journey to
+                    something delicious starts here.
+                </p>
+
+                <div class="benefits">
+                    <div class="benefit">
+                        <span class="benefit-icon" aria-hidden="true">♡</span>
+                        <span>A personal shopping experience</span>
+                    </div>
+
+                    <div class="benefit">
+                        <span class="benefit-icon" aria-hidden="true">✧</span>
+                        <span>Easy order tracking</span>
+                    </div>
+
+                    <div class="benefit">
+                        <span class="benefit-icon" aria-hidden="true">❀</span>
+                        <span>A little sweetness in every visit</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="brand-footer">
+                Made with care, shared with love.
+            </div>
+        </section>
+
+        <!-- REGISTRATION FORM -->
+        <section class="form-panel">
+
+            <a href="{% url 'home' %}" class="mobile-brand">
+                <img src="{% static 'images/logo.png' %}"
+                     alt="Velmore Studio logo">
+
+                <span>
+                    <strong>VELMORE STUDIO</strong>
+                    <small>HOMEMADE WITH LOVE</small>
+                </span>
+            </a>
+
+            <p class="form-eyebrow">Become a member</p>
+            <h2>Create account</h2>
+
+            <p class="form-intro">
+                Fill in your details to get started with Velmore Studio.
+            </p>
+
+            {% if messages %}
+                <div class="messages" aria-live="polite">
+                    {% for message in messages %}
+                        <div class="message {{ message.tags|default:'info' }}">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+
+            {% if form.non_field_errors %}
+                <div class="message error" role="alert">
+                    {% for error in form.non_field_errors %}
+                        {{ error }}
+                    {% endfor %}
+                </div>
+            {% endif %}
+
+            <form method="post" action="{% url 'register' %}">
+                {% csrf_token %}
+
+                <div class="field">
+                    <label for="id_username">Username</label>
+
+                    <input
+                        type="text"
+                        id="id_username"
+                        name="username"
+                        value="{{ form.username.value|default:'' }}"
+                        placeholder="Choose a username"
+                        autocomplete="username"
+                        maxlength="150"
+                        required
+                        autofocus
+                        {% if form.username.errors %}aria-invalid="true"{% endif %}
+                    >
+
+                    {% if form.username.errors %}
+                        <span class="field-error">
+                            {{ form.username.errors|join:", " }}
+                        </span>
+                    {% endif %}
+                </div>
+
+                <div class="field">
+                    <label for="id_email">Email address</label>
+
+                    <input
+                        type="email"
+                        id="id_email"
+                        name="email"
+                        value="{{ form.email.value|default:'' }}"
+                        placeholder="you@example.com"
+                        autocomplete="email"
+                        maxlength="254"
+                        required
+                        {% if form.email.errors %}aria-invalid="true"{% endif %}
+                    >
+
+                    {% if form.email.errors %}
+                        <span class="field-error">
+                            {{ form.email.errors|join:", " }}
+                        </span>
+                    {% endif %}
+                </div>
+
+                <div class="field">
+                    <label for="id_password1">Password</label>
+
+                    <div class="password-wrap">
+                        <input
+                            type="password"
+                            id="id_password1"
+                            name="password1"
+                            placeholder="Create a strong password"
+                            autocomplete="new-password"
+                            required
+                            {% if form.password1.errors %}aria-invalid="true"{% endif %}
+                        >
+
+                        <button
+                            type="button"
+                            class="toggle-password"
+                            data-password-target="id_password1"
+                            aria-controls="id_password1"
+                            aria-pressed="false"
+                        >Show</button>
+                    </div>
+
+                    {% if form.password1.help_text %}
+                        <span class="help-text">
+                            {{ form.password1.help_text|safe }}
+                        </span>
+                    {% else %}
+                        <span class="help-text">
+                            Choose a password that is difficult to guess.
+                        </span>
+                    {% endif %}
+
+                    {% if form.password1.errors %}
+                        <span class="field-error">
+                            {{ form.password1.errors|join:", " }}
+                        </span>
+                    {% endif %}
+                </div>
+
+                <div class="field">
+                    <label for="id_password2">Confirm password</label>
+
+                    <div class="password-wrap">
+                        <input
+                            type="password"
+                            id="id_password2"
+                            name="password2"
+                            placeholder="Enter your password again"
+                            autocomplete="new-password"
+                            required
+                            {% if form.password2.errors %}aria-invalid="true"{% endif %}
+                        >
+
+                        <button
+                            type="button"
+                            class="toggle-password"
+                            data-password-target="id_password2"
+                            aria-controls="id_password2"
+                            aria-pressed="false"
+                        >Show</button>
+                    </div>
+
+                    {% if form.password2.errors %}
+                        <span class="field-error">
+                            {{ form.password2.errors|join:", " }}
+                        </span>
+                    {% endif %}
+                </div>
+
+                <button type="submit" class="submit-button">
+                    Create My Account →
+                </button>
+            </form>
+
+            <p class="login-note">
+                Already have an account?
+                <a href="{% url 'login' %}">Sign in</a>
+            </p>
+
+            <a href="{% url 'home' %}" class="back-home">
+                ← Back to the store
+            </a>
+
+        </section>
+    </main>
+
+    <script>
+        "use strict";
+
+        document.querySelectorAll(".toggle-password").forEach(function (button) {
+            button.addEventListener("click", function () {
+                const targetId = button.dataset.passwordTarget;
+                const passwordInput = document.getElementById(targetId);
+
+                if (!passwordInput) {
+                    return;
+                }
+
+                const isHidden = passwordInput.type === "password";
+
+                passwordInput.type = isHidden ? "text" : "password";
+                button.textContent = isHidden ? "Hide" : "Show";
+                button.setAttribute("aria-pressed", String(isHidden));
+            });
+        });
+    </script>
+</body>
+</html>

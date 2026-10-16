@@ -1,0 +1,193 @@
+
+{% extends "admin/change_form.html" %}
+{% load static admin_modify %}
+
+{% block title %}
+    Velmore Studio | {% if add %}Add Product{% else %}Edit Product{% endif %}
+{% endblock %}
+
+{% block extrastyle %}
+    {{ block.super }}
+    <link rel="stylesheet" href="{% static 'admin/velmore-admin.css' %}">
+{% endblock %}
+
+{% block extrahead %}
+    {{ block.super }}
+    <script src="{% static 'admin/velmore-admin.js' %}" defer></script>
+{% endblock %}
+
+{% block content %}
+<div class="velmore-page">
+
+    <div class="velmore-breadcrumb">
+        <a href="{% url 'admin:index' %}">Dashboard</a>
+        <span>›</span>
+        <a href="{% url 'admin:products_product_changelist' %}">Products</a>
+        <span>›</span>
+        <span>{% if add %}Add Product{% else %}Edit Product{% endif %}</span>
+    </div>
+
+    <div class="velmore-page-heading">
+        <div>
+            <h1>
+                {% if add %}Add New Product{% else %}Edit Product{% endif %}
+                <span>♡</span>
+            </h1>
+            <p>Add a delicious bakery product to your Velmore Studio collection.</p>
+        </div>
+
+        <a class="velmore-back-button"
+           href="{% url 'admin:products_product_changelist' %}">
+            ← Back to Products
+        </a>
+    </div>
+
+    {% if errors %}
+        <div class="velmore-error-message">
+            Please correct the errors below.
+        </div>
+    {% endif %}
+
+    <form method="post"
+          id="{{ opts.model_name }}_form"
+          {% if has_file_field %}enctype="multipart/form-data"{% endif %}
+          novalidate>
+
+        {% csrf_token %}
+        {% block form_top %}{% endblock %}
+
+        {% if is_popup %}
+            <input type="hidden" name="{{ is_popup_var }}" value="1">
+        {% endif %}
+
+        {% if to_field %}
+            <input type="hidden" name="{{ to_field_var }}" value="{{ to_field }}">
+        {% endif %}
+
+        <div class="velmore-content-grid">
+
+            <!-- LEFT: PRODUCT FORM -->
+            <section class="velmore-form-card">
+
+                <div class="velmore-card-heading">
+                    <div class="velmore-heading-title">
+                        <span class="velmore-heading-icon">✿</span>
+                        <h2>Product Information</h2>
+                    </div>
+                    <span class="velmore-heading-caption">
+                        Fill in your product details
+                    </span>
+                </div>
+
+                <div class="velmore-form-body">
+
+                    {% if errors %}
+                        <p class="errornote">
+                            Please correct the errors below.
+                        </p>
+                    {% endif %}
+
+                    {% block field_sets %}
+                        {% for fieldset in adminform %}
+                            {% include "admin/includes/fieldset.html" %}
+                        {% endfor %}
+                    {% endblock %}
+
+                    {% block after_field_sets %}{% endblock %}
+
+                    {% block inline_field_sets %}
+                        {% for inline_admin_formset in inline_admin_formsets %}
+                            {% include inline_admin_formset.opts.template %}
+                        {% endfor %}
+                    {% endblock %}
+
+                    {% block after_related_objects %}{% endblock %}
+
+                </div>
+
+                <div class="velmore-form-actions">
+                    {% block submit_buttons_bottom %}
+                        {% submit_row %}
+                    {% endblock %}
+                </div>
+
+            </section>
+
+            <!-- RIGHT: LIVE PRODUCT PREVIEW -->
+            <aside class="velmore-preview-card">
+
+                <div class="velmore-card-heading">
+                    <div class="velmore-heading-title">
+                        <span class="velmore-heading-icon">▧</span>
+                        <h2>Product Preview</h2>
+                    </div>
+                    <span class="velmore-heading-caption">Live preview</span>
+                </div>
+
+                <div class="velmore-preview-body">
+
+                    <div class="velmore-image-preview">
+
+                        <div class="velmore-placeholder"
+                             id="velmorePlaceholder">
+                            <span>🧁</span>
+                            <p>Your bakery product will appear here</p>
+                        </div>
+
+                        <img id="velmorePreviewImage"
+                             src=""
+                             alt="Product image preview"
+                             hidden>
+
+                    </div>
+
+                    <div class="velmore-preview-details">
+
+                        <span class="velmore-preview-label">
+                            PRODUCT NAME
+                        </span>
+
+                        <h3 id="velmorePreviewName">
+                            Your Product Name
+                        </h3>
+
+                        <span class="velmore-preview-label">
+                            PRICE
+                        </span>
+
+                        <p class="velmore-preview-price">
+                            ₹<span id="velmorePreviewPrice">0.00</span>
+                        </p>
+
+                        <span class="velmore-preview-label">
+                            DESCRIPTION
+                        </span>
+
+                        <p class="velmore-preview-description"
+                           id="velmorePreviewDescription">
+                            Your product description will appear here.
+                        </p>
+
+                    </div>
+
+                    <div class="velmore-image-tips">
+                        <h3>♡ Image Tips</h3>
+
+                        <ul>
+                            <li>Use a clear, high-quality bakery photo.</li>
+                            <li>Transparent PNG backgrounds work well.</li>
+                            <li>Use good lighting and a clear angle.</li>
+                            <li>Choose an image smaller than 5 MB.</li>
+                        </ul>
+                    </div>
+
+                </div>
+            </aside>
+
+        </div>
+
+        {% block submit_buttons_top %}{% endblock %}
+
+    </form>
+</div>
+{% endblock %}

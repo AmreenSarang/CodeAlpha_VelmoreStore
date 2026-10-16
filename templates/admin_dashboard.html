@@ -1,0 +1,463 @@
+
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Admin Dashboard | Velmore Studio</title>
+
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/admin-dashboard.css' %}">
+</head>
+
+<body>
+<div class="dashboard-layout">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+
+        <a href="{% url 'home' %}" class="brand">
+            <img src="{% static 'images/logo.png' %}" alt="Velmore Studio logo">
+            <span>
+                <strong>VELMORE</strong>
+                <small>STUDIO ADMIN</small>
+            </span>
+        </a>
+
+        <p class="sidebar-label">WORKSPACE</p>
+
+        <a href="{% url 'admin_dashboard' %}" class="side-link active">
+            <span>▦</span> Dashboard
+        </a>
+
+        <a href="{% url 'admin:products_product_changelist' %}" class="side-link">
+            <span>♧</span> Products
+        </a>
+
+        <a href="{% url 'admin:products_order_changelist' %}" class="side-link">
+            <span>▤</span> Orders
+        </a>
+
+        <a href="{% url 'admin:products_orderitem_changelist' %}" class="side-link">
+            <span>▧</span> Order Items
+        </a>
+
+        <a href="{% url 'admin:auth_user_changelist' %}" class="side-link">
+            <span>♙</span> Customers &amp; Users
+        </a>
+
+        <a href="{% url 'home' %}" class="side-link">
+            <span>⌂</span> View Store
+        </a>
+
+        <div class="sidebar-bottom">
+            <div class="admin-profile">
+                <div class="avatar">
+                    {{ request.user.username|first|upper }}
+                </div>
+
+                <div>
+                    <strong>{{ request.user.username }}</strong>
+                    <small>Administrator</small>
+                </div>
+            </div>
+
+            <a href="{% url 'admin:index' %}" class="admin-link">
+                Open Django Admin ↗
+            </a>
+
+            <form method="post" action="{% url 'logout' %}" class="sidebar-logout">
+                {% csrf_token %}
+                <button type="submit">Logout</button>
+            </form>
+        </div>
+    </aside>
+
+    <!-- MAIN CONTENT -->
+    <main class="main-content">
+
+        <!-- HEADER -->
+        <header class="topbar">
+            <div>
+                <p class="eyebrow">YOUR BAKERY AT A GLANCE</p>
+
+                <h1>
+                    Good day, {{ request.user.username }} ♡
+                </h1>
+
+                <p class="muted">
+                    Here's what's happening at Velmore Studio.
+                </p>
+            </div>
+
+            <div class="topbar-actions">
+                <span class="today-label">
+                    {% now "D, d M Y" %}
+                </span>
+
+                <a class="button button-dark"
+                   href="{% url 'home' %}"
+                   target="_blank">
+                    View Store ↗
+                </a>
+            </div>
+        </header>
+
+        <!-- STATISTICS -->
+        <section class="stats-grid">
+
+            <article class="stat-card revenue-card">
+                <div class="stat-top">
+                    <span class="stat-label">Total Revenue</span>
+                    <span class="stat-icon">₹</span>
+                </div>
+
+                <h2>₹{{ total_revenue|floatformat:2 }}</h2>
+                <p>Excludes cancelled orders</p>
+            </article>
+
+            <article class="stat-card">
+                <div class="stat-top">
+                    <span class="stat-label">Total Orders</span>
+                    <span class="stat-icon pink-icon">▤</span>
+                </div>
+
+                <h2>{{ order_count }}</h2>
+                <p>
+                    {{ today_orders }} order{{ today_orders|pluralize }} today
+                </p>
+            </article>
+
+            <article class="stat-card">
+                <div class="stat-top">
+                    <span class="stat-label">Products</span>
+                    <span class="stat-icon green-icon">♧</span>
+                </div>
+
+                <h2>{{ product_count }}</h2>
+                <p>
+                    {{ low_stock_count }} low-stock product{{ low_stock_count|pluralize }}
+                </p>
+            </article>
+
+            <article class="stat-card">
+                <div class="stat-top">
+                    <span class="stat-label">Customers &amp; Users</span>
+                    <span class="stat-icon purple-icon">♙</span>
+                </div>
+
+                <h2>{{ customer_count }}</h2>
+                <p>Non-staff accounts</p>
+            </article>
+
+        </section>
+
+        <!-- TODAY'S PERFORMANCE -->
+        <section class="today-banner">
+            <div>
+                <span class="banner-label">TODAY'S PERFORMANCE</span>
+
+                <h2>₹{{ today_revenue|floatformat:2 }}</h2>
+
+                <p>Revenue from today's non-cancelled orders</p>
+            </div>
+
+            <div class="banner-decoration">♡</div>
+        </section>
+
+        <!-- SALES AND ORDER STATUS -->
+        <section class="content-grid">
+
+            <!-- SALES CHART -->
+            <article class="panel sales-panel">
+                <div class="panel-heading">
+                    <div>
+                        <h2>Sales Overview</h2>
+                        <p>Last 7 calendar days</p>
+                    </div>
+
+                    <span class="mini-badge">7 DAYS</span>
+                </div>
+
+                <div class="chart">
+                    {% for day in daily_sales %}
+                        <div class="chart-column">
+
+                            <span class="bar-value">
+                                {% if day.total %}
+                                    ₹{{ day.total|floatformat:0 }}
+                                {% else %}
+                                    —
+                                {% endif %}
+                            </span>
+
+                            <div class="bar-track">
+                                <div
+                                    class="bar"
+                                    style="height: {{ day.bar_height }}%;"
+                                    title="{{ day.date|date:'d M Y' }}: ₹{{ day.total|floatformat:2 }}">
+                                </div>
+                            </div>
+
+                            <span class="bar-label">
+                                {{ day.label }}
+                            </span>
+
+                        </div>
+                    {% empty %}
+                        <p>No sales data available yet.</p>
+                    {% endfor %}
+                </div>
+
+                <p class="chart-note">
+                    Values exclude cancelled orders. Revenue is based on order
+                    totals and is not confirmed payment revenue.
+                </p>
+            </article>
+
+            <!-- ORDER STATUS -->
+            <article class="panel status-panel">
+                <div class="panel-heading">
+                    <div>
+                        <h2>Order Status</h2>
+                        <p>Current order breakdown</p>
+                    </div>
+                </div>
+
+                <div class="status-row">
+                    <span>
+                        <i class="status-dot pending"></i>
+                        Pending
+                    </span>
+                    <strong>{{ pending_orders }}</strong>
+                </div>
+
+                <div class="status-row">
+                    <span>
+                        <i class="status-dot confirmed"></i>
+                        Confirmed
+                    </span>
+                    <strong>{{ confirmed_orders }}</strong>
+                </div>
+
+                <div class="status-row">
+                    <span>
+                        <i class="status-dot shipped"></i>
+                        Shipped
+                    </span>
+                    <strong>{{ shipped_orders }}</strong>
+                </div>
+
+                <div class="status-row">
+                    <span>
+                        <i class="status-dot delivered"></i>
+                        Delivered
+                    </span>
+                    <strong>{{ delivered_orders }}</strong>
+                </div>
+
+                <div class="status-row">
+                    <span>
+                        <i class="status-dot cancelled"></i>
+                        Cancelled
+                    </span>
+                    <strong>{{ cancelled_orders }}</strong>
+                </div>
+
+                <a href="{% url 'admin:products_order_changelist' %}"
+                   class="text-link">
+                    Manage all orders →
+                </a>
+            </article>
+
+        </section>
+
+        <!-- RECENT ORDERS -->
+        <section class="panel recent-panel">
+            <div class="panel-heading">
+                <div>
+                    <h2>Recent Orders</h2>
+                    <p>Your latest customer orders</p>
+                </div>
+
+                <a href="{% url 'admin:products_order_changelist' %}"
+                   class="text-link">
+                    View all →
+                </a>
+            </div>
+
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Order</th>
+                            <th>Customer</th>
+                            <th>Date</th>
+                            <th>Items</th>
+                            <th>Total</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        {% for order in recent_orders %}
+                            <tr>
+                                <td class="order-id">
+                                    No{{ order.id }}
+                                </td>
+
+                                <td>
+                                    <strong>{{ order.full_name }}</strong>
+                                    <small class="table-subtitle">
+                                        {{ order.email }}
+                                    </small>
+                                </td>
+
+                                <td>
+                                    {{ order.created_at|date:"d M Y" }}
+                                </td>
+
+                                <td>
+                                    {{ order.items.count }}
+                                </td>
+
+                                <td class="amount">
+                                    ₹{{ order.total_amount|floatformat:2 }}
+                                </td>
+
+                                <td>
+                                    <span class="status-pill status-{{ order.status|lower }}">
+                                        {{ order.get_status_display }}
+                                    </span>
+                                </td>
+                            </tr>
+
+                        {% empty %}
+                            <tr>
+                                <td colspan="6" class="empty-table">
+                                    <span>🧁</span>
+                                    <strong>No orders yet</strong>
+                                    <p>Customer orders will appear here.</p>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- INVENTORY AND QUICK ACTIONS -->
+        <section class="content-grid bottom-grid">
+
+            <!-- INVENTORY ALERTS -->
+            <article class="panel inventory-panel">
+                <div class="panel-heading">
+                    <div>
+                        <h2>Inventory Alerts</h2>
+                        <p>Products that need attention</p>
+                    </div>
+
+                    <span class="alert-icon">!</span>
+                </div>
+
+                {% if low_stock_products %}
+                    {% for product in low_stock_products %}
+                        <div class="inventory-row">
+                            <div>
+                                <strong>{{ product.name }}</strong>
+                                <small>
+                                    ₹{{ product.price|floatformat:2 }}
+                                </small>
+                            </div>
+
+                            <span class="stock-pill">
+                                {{ product.stock }} left
+                            </span>
+                        </div>
+                    {% endfor %}
+                {% else %}
+                    <div class="success-message">
+                        <span>✓</span>
+                        No low-stock products right now.
+                    </div>
+                {% endif %}
+
+                {% if out_of_stock_count %}
+                    <p class="out-of-stock-note">
+                        {{ out_of_stock_count }}
+                        product{{ out_of_stock_count|pluralize }}
+                        currently out of stock.
+                    </p>
+                {% endif %}
+
+                <a href="{% url 'admin:products_product_changelist' %}"
+                   class="text-link">
+                    Update inventory →
+                </a>
+            </article>
+
+            <!-- QUICK ACTIONS -->
+            <article class="panel shortcuts-panel">
+                <div class="panel-heading">
+                    <div>
+                        <h2>Quick Actions</h2>
+                        <p>Manage your store efficiently</p>
+                    </div>
+                </div>
+
+                <a href="{% url 'admin:products_product_add' %}"
+                   class="shortcut">
+                    <span class="shortcut-icon">＋</span>
+
+                    <span>
+                        <strong>Add New Product</strong>
+                        <small>Add a treat to your collection</small>
+                    </span>
+
+                    <span class="shortcut-arrow">→</span>
+                </a>
+
+                <a href="{% url 'admin:products_order_changelist' %}"
+                   class="shortcut">
+                    <span class="shortcut-icon pink-shortcut">▤</span>
+
+                    <span>
+                        <strong>Manage Orders</strong>
+                        <small>Review and update order status</small>
+                    </span>
+
+                    <span class="shortcut-arrow">→</span>
+                </a>
+
+                <a href="{% url 'admin:auth_user_changelist' %}"
+                   class="shortcut">
+                    <span class="shortcut-icon green-shortcut">♙</span>
+
+                    <span>
+                        <strong>Manage Users</strong>
+                        <small>Review registered accounts</small>
+                    </span>
+
+                    <span class="shortcut-arrow">→</span>
+                </a>
+            </article>
+
+        </section>
+
+        <!-- FOOTER -->
+        <footer class="dashboard-footer">
+            <span>
+                © {% now "Y" %} <strong>Velmore Studio</strong>
+            </span>
+
+            <span>
+                Made with <b>♡</b> and a little sugar.
+            </span>
+        </footer>
+
+    </main>
+</div>
+</body>
+</html>
